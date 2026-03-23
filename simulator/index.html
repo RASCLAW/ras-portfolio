@@ -479,7 +479,7 @@ async function step5f(){
       <div style="font-size:11px;color:var(--muted);line-height:1.6;max-width:400px;margin:0 auto">Meta Marketing API + Google Sheets API + kie.ai API + Google Drive API -- orchestrated by one agent, with autonomous error recovery.</div>
     </div>`;
   log('Ad staging complete. Content pipeline finished!','var(--green)');
-  await wait(3000);showPhase2Intro();
+  await wait(6000);showPhase2Intro();
 }
 
 // ========== PHASE 2: CUSTOMER JOURNEY ==========
@@ -569,7 +569,7 @@ async function crm4(){
     {icon:'🏷',text:'Auto-tagged: HOT LEAD (clicked ad + ordered)',color:'var(--amber)'},
     {icon:'📱',text:'Auto-reply sent via Facebook Messenger',color:'var(--accent)'},
     {icon:'📧',text:'Confirmation email sent to Maria',color:'var(--accent2)'},
-    {icon:'🔔',text:'RA notified: New order! Bujah says papa may sale!',color:'var(--pink)'}
+    {icon:'🔔',text:'RA notified: New order from Antipolo!',color:'var(--pink)'}
   ];
   const box=document.getElementById('notifications');
   for(const n of notifs){
@@ -600,8 +600,8 @@ async function crm5(){
     </div>`;
   const msgs=[
     {type:'customer-msg',text:"Hi, I just ordered the Outback Black. When will it arrive?"},
-    {type:'bot-msg',text:"Hi Arabelle! 😊 Thanks for your order! Since you're in QC, Metro Manila, your Dubery Outback will be delivered same-day via Lalamove. You'll receive a tracking link shortly. Payment is COD -- P699."},
-    {type:'customer-msg',text:"Nice! Can I add one for Buki? The Bandits Series?"},
+    {type:'bot-msg',text:"Hi Arabelle! 😊 Thanks for your order! Since you're in Antipolo, your Dubery Outback will be delivered same-day via Lalamove. You'll receive a tracking link shortly. Payment is COD -- P699."},
+    {type:'customer-msg',text:"Nice! Can I add one for Bujah? The Bandits Series?"},
     {type:'bot-msg',text:"Great choice! I can upgrade you to our Bundle Deal -- 2 pairs for P1,200 (save P198). Want me to update your order to Outback Black + Bandits Glossy Black?"},
     {type:'customer-msg',text:"Yes please! P1,200 bundle. 🔥"},
     {type:'bot-msg',text:"Done! ✅ Order updated to Bundle (P1,200 COD). You'll get both pairs today. Anything else I can help with?"}
@@ -625,7 +625,7 @@ async function crm6(){
       <div style="font-size:16px;font-weight:700;margin-bottom:8px">Order Fulfilled</div>
       <div class="lead-card">
         <div class="field"><span class="k">Customer</span><span class="v">Arabelle Reyes</span></div>
-        <div class="field"><span class="k">Product</span><span class="v">Bundle: Outback + Bandits</span></div>
+        <div class="field"><span class="k">Product</span><span class="v">Bundle: Outback + Bandits (Buki edition)</span></div>
         <div class="field"><span class="k">Amount</span><span class="v" style="color:var(--green)">P1,200 (upsold from P699)</span></div>
         <div class="field"><span class="k">Delivery</span><span class="v">Lalamove, same-day</span></div>
         <div class="field"><span class="k">Status</span><span class="v"><span class="lead-tag" style="background:rgba(16,185,129,.15);color:var(--green)">DELIVERED</span></span></div>
