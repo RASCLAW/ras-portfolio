@@ -3,109 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Content Pipeline Simulator -- RAS AI Solutions</title>
+<title>Content Pipeline + CRM Simulator -- RAS AI Solutions</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050508;--card:#0c0c14;--border:#1a1a2e;--text:#e2e8f0;--muted:#64748b;--accent:#22d3ee;--accent2:#a78bfa;--pink:#f472b6;--green:#10b981;--amber:#f59e0b}
+:root{--bg:#050508;--card:#0c0c14;--border:#1a1a2e;--text:#e2e8f0;--muted:#64748b;--accent:#22d3ee;--accent2:#a78bfa;--pink:#f472b6;--green:#10b981;--amber:#f59e0b;--red:#ef4444}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-system,sans-serif;min-height:100vh;overflow-x:hidden}
 .m{font-family:'JetBrains Mono',monospace}
 
-/* LAYOUT */
 .sim{max-width:800px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
-.header{text-align:center;padding:40px 0 20px}
+.header{text-align:center;padding:40px 0 12px}
 .header .tag{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:8px}
-.header h1{font-size:24px;font-weight:700;letter-spacing:-1px}
+.header h1{font-size:22px;font-weight:700;letter-spacing:-1px}
 .header p{font-size:13px;color:var(--muted);margin-top:8px}
 
-/* STAGE */
-.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0}
-.scene{width:100%;max-width:600px;min-height:400px;position:relative}
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 60px}
+.scene{width:100%;max-width:650px;min-height:380px;position:relative}
+
+/* PHASE LABEL */
+.phase-label{text-align:center;margin:12px 0 8px;font-size:10px;text-transform:uppercase;letter-spacing:3px;font-weight:600}
+
+/* CONVEYOR */
+.conveyor{display:flex;align-items:center;gap:6px;padding:8px 0;justify-content:center;flex-wrap:wrap}
+.conveyor-item{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;border:2px solid var(--border);transition:all .4s;opacity:.3}
+.conveyor-item.active{opacity:1;border-color:var(--accent);box-shadow:0 0 15px rgba(34,211,238,.2)}
+.conveyor-item.done{opacity:1;border-color:var(--green)}
+.conveyor-arrow{color:var(--muted);font-size:12px;opacity:.3}
 
 /* AGENT */
-.agent{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative}
-.agent-body{width:80px;height:80px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;transition:transform .3s}
+.agent{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.agent-body{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;position:relative;transition:transform .3s}
 .agent-body.thinking{animation:think 1s ease-in-out infinite}
 .agent-body.working{animation:work .5s ease-in-out infinite}
 .agent-body.celebrating{animation:celebrate .4s ease-in-out 3}
-.agent-name{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.agent-status{font-size:11px;color:var(--muted);min-height:16px}
+.agent-name{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.agent-status{font-size:10px;color:var(--muted);min-height:14px}
 
-/* THOUGHT BUBBLE */
-.thought{position:absolute;top:-60px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 16px;font-size:12px;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.thought{position:absolute;top:-50px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:11px;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
 .thought.visible{opacity:1}
-.thought::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid var(--border)}
+.thought::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-top:7px solid var(--border)}
 
-/* WORKSPACE */
-.workspace{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-top:20px;width:100%;min-height:150px;position:relative;overflow:hidden}
-.workspace-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:12px}
+.workspace{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:16px;width:100%;min-height:120px;overflow:hidden}
+.workspace-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
 
-/* PAPER */
-.paper{background:#1a1a2e;border:1px solid #2a2a3e;border-radius:8px;padding:12px 16px;margin-bottom:8px;font-size:12px;line-height:1.6;opacity:0;transform:translateY(10px);transition:all .4s}
+.paper{background:#1a1a2e;border:1px solid #2a2a3e;border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:11px;line-height:1.5;opacity:0;transform:translateY(8px);transition:all .4s}
 .paper.visible{opacity:1;transform:translateY(0)}
-.paper .label{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.paper .label{font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
 
-/* CONVEYOR */
-.conveyor{display:flex;align-items:center;gap:12px;padding:16px 0;justify-content:center}
-.conveyor-item{width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--border);transition:all .4s;opacity:.3}
-.conveyor-item.active{opacity:1;border-color:var(--accent);box-shadow:0 0 20px rgba(34,211,238,.2)}
-.conveyor-item.done{opacity:1;border-color:var(--green)}
-.conveyor-arrow{color:var(--muted);font-size:16px}
-
-/* BUTTONS */
-.btn{padding:12px 24px;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
 .btn-primary{background:var(--accent);color:var(--bg)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(34,211,238,.3)}
 .btn-secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
-.btn-secondary:hover{background:rgba(34,211,238,.1)}
 .btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-row{display:flex;gap:12px;justify-content:center;margin-top:24px}
+.btn-row{display:flex;gap:10px;justify-content:center;margin-top:20px}
 
-/* IMAGE PLACEHOLDER */
-.img-gen{width:200px;height:250px;border-radius:12px;background:var(--card);border:2px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin:16px auto;position:relative;overflow:hidden}
-.img-gen .progress{position:absolute;bottom:0;left:0;height:4px;background:var(--accent);transition:width 2s linear;border-radius:0 0 12px 12px}
+.img-gen{width:160px;height:200px;border-radius:12px;background:var(--card);border:2px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;margin:12px auto;position:relative;overflow:hidden}
+.img-gen .progress{position:absolute;bottom:0;left:0;height:3px;background:var(--accent);transition:width 2s linear}
 .img-gen.generating{border-color:var(--amber);animation:pulse 1.5s ease-in-out infinite}
 .img-gen.done{border-color:var(--green)}
-.img-gen .placeholder{font-size:48px;opacity:.3}
-.img-gen.done .placeholder{opacity:1}
 
-/* REVIEW CARD */
-.review-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:20px;text-align:center;margin:16px auto;max-width:300px}
-.review-card .verdict{font-size:18px;font-weight:700;margin:8px 0}
-.review-card .reason{font-size:12px;color:var(--muted);line-height:1.6}
+/* CRM SPECIFIC */
+.customer{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:12px}
+.customer .avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(167,139,250,.1)}
 
-/* AD PREVIEW */
-.ad-preview{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;max-width:320px;margin:16px auto}
-.ad-preview .ad-img{width:100%;height:180px;border-radius:8px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:12px}
-.ad-preview .ad-caption{font-size:13px;line-height:1.6;margin-bottom:8px}
-.ad-preview .ad-meta{font-size:10px;color:var(--muted);display:flex;justify-content:space-between}
+.chat-bubble{max-width:80%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.5;margin-bottom:8px;opacity:0;transform:translateY(8px);transition:all .4s}
+.chat-bubble.visible{opacity:1;transform:translateY(0)}
+.chat-bubble.customer-msg{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);margin-left:auto;border-bottom-right-radius:4px}
+.chat-bubble.bot-msg{background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);margin-right:auto;border-bottom-left-radius:4px}
 
-/* METRICS */
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.lead-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px auto;max-width:350px}
+.lead-card .field{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
+.lead-card .field:last-child{border:none}
+.lead-card .field .k{color:var(--muted)}
+.lead-card .field .v{font-weight:600}
+.lead-tag{display:inline-block;padding:3px 8px;border-radius:4px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+
+.notification{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:8px 0;display:flex;align-items:center;gap:10px;font-size:12px;opacity:0;transform:translateX(-20px);transition:all .4s}
+.notification.visible{opacity:1;transform:translateX(0)}
+.notification .icon{font-size:18px}
+
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin:16px 0}
 .metric{text-align:center;padding:12px;background:#1a1a2e;border-radius:8px}
-.metric .num{font-size:20px;font-weight:700}
-.metric .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.metric .num{font-size:18px;font-weight:700}
+.metric .label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
 
-/* ANIMATIONS */
 @keyframes think{0%,100%{transform:scale(1)}50%{transform:scale(1.05) rotate(2deg)}}
-@keyframes work{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes work{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes celebrate{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(1.1) rotate(-5deg)}75%{transform:scale(1.1) rotate(5deg)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 20px rgba(245,158,11,.3)}}
-@keyframes typewriter{from{width:0}to{width:100%}}
-@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 15px rgba(245,158,11,.3)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
 .animate-in{animation:fadeUp .5s ease forwards}
 
-/* LOG */
-.log{position:fixed;bottom:0;left:0;right:0;background:rgba(5,5,8,.95);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:12px;font-size:11px;z-index:100}
+.log{position:fixed;bottom:0;left:0;right:0;background:rgba(5,5,8,.95);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:10px;font-size:10px;z-index:100}
 .log .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .log .msg{color:var(--muted);flex:1}
-.log .time{color:var(--muted);font-size:10px}
+.log .time{color:var(--muted);font-size:9px}
 
-/* FINAL */
-.final{text-align:center;padding:40px 20px}
-.final h2{font-size:28px;font-weight:700;margin-bottom:12px}
-.final p{color:var(--muted);font-size:14px;line-height:1.7;max-width:500px;margin:0 auto 24px}
+.final{text-align:center;padding:32px 16px}
+.final h2{font-size:26px;font-weight:700;margin-bottom:12px}
+.final p{color:var(--muted);font-size:13px;line-height:1.7;max-width:500px;margin:0 auto 20px}
+
+@media(max-width:600px){.conveyor-item{width:32px;height:32px;font-size:14px}}
 </style>
 </head>
 <body>
@@ -113,12 +112,13 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-s
 <div class="sim">
   <div class="header">
     <div class="tag m">Interactive Simulation</div>
-    <h1>Content Pipeline Orchestrator</h1>
-    <p>You are Claude Code. You orchestrate the DuberyMNL content pipeline.</p>
+    <h1>Full Funnel Orchestrator</h1>
+    <p>You are Claude Code. Run the content pipeline, then watch the customer journey unfold.</p>
   </div>
 
-  <!-- CONVEYOR BELT -->
-  <div class="conveyor">
+  <!-- PHASE 1: CONTENT -->
+  <div class="phase-label m" style="color:var(--accent)">Phase 1: Content Pipeline</div>
+  <div class="conveyor" id="conveyor1">
     <div class="conveyor-item active" id="cv-0">💡</div>
     <div class="conveyor-arrow">&rarr;</div>
     <div class="conveyor-item" id="cv-1">📝</div>
@@ -132,12 +132,27 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-s
     <div class="conveyor-item" id="cv-5">📣</div>
   </div>
 
+  <!-- PHASE 2: CRM -->
+  <div class="phase-label m" style="color:var(--accent2)" id="phase2-label" hidden>Phase 2: Customer Journey</div>
+  <div class="conveyor" id="conveyor2" hidden>
+    <div class="conveyor-item" id="cv-6">👀</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-7">🛬</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-8">💬</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-9">📋</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-10">🤖</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-11">📦</div>
+  </div>
+
   <div class="stage">
     <div class="scene" id="scene"></div>
   </div>
 </div>
 
-<!-- LOG BAR -->
 <div class="log">
   <div class="dot" style="background:var(--green);box-shadow:0 0 6px var(--green)" id="log-dot"></div>
   <div class="msg m" id="log-msg">System ready. Awaiting your command, Orchestrator.</div>
@@ -149,342 +164,323 @@ const scene=document.getElementById('scene');
 const logMsg=document.getElementById('log-msg');
 const logTime=document.getElementById('log-time');
 const logDot=document.getElementById('log-dot');
-let step=0;
 
-// Sample data
 const captions=[
-  {id:'20260324-001',angle:'Identity',hook:'POV',caption:"POV: You walked into the office and everyone asked where you got your shades.\n\nDubery Outback. P699 lang.\nBundle 2 pairs for P1,200.\n\nCOD Metro Manila. Same-day delivery.\n\nMessage us na.",hashtags:'#DuberyMNL #PolarizedSunglasses'},
-  {id:'20260324-002',angle:'Pain Relief',hook:'Question',caption:"Napapagod ka na ba sa sunglasses na nababasag after 2 weeks?\n\nDubery Bandits Series. Polarized. Built different.\nP699 single. P1,200 bundle.\n\nCOD. Free delivery. Metro Manila.\n\nOrder na.",hashtags:'#DuberyMNL #DuberyOptics'},
-  {id:'20260324-003',angle:'Value/Deal',hook:'Price Shock',caption:"P1,200 for TWO pairs of polarized sunglasses.\n\nThat's P600 each. That's cheaper than your Grab ride.\n\nDubery Rasta Series.\nCOD Metro Manila. Delivered same day.\n\nDM us.",hashtags:'#DuberyMNL #CODMetroManila'}
+  {id:'20260324-001',angle:'Identity',hook:'POV',caption:"POV: You walked into the office and everyone asked where you got your shades.\n\nDubery Outback. P699 lang.\nBundle 2 pairs for P1,200.\n\nCOD Metro Manila. Same-day delivery.\n\nMessage us na."},
+  {id:'20260324-002',angle:'Pain Relief',hook:'Question',caption:"Napapagod ka na ba sa sunglasses na nababasag after 2 weeks?\n\nDubery Bandits Series. Polarized. Built different.\nP699 single. P1,200 bundle."},
+  {id:'20260324-003',angle:'Value/Deal',hook:'Price Shock',caption:"P1,200 for TWO pairs of polarized sunglasses.\n\nThat's P600 each. Cheaper than your Grab ride.\n\nDubery Rasta Series. COD Metro Manila."}
 ];
-
-const promptData={
-  headline:'DUBERY OUTBACK',
-  scene:'Golden hour rooftop Manila skyline, warm amber lighting, shallow depth of field',
-  render_notes:'POSITION: centered hero, slight 3/4 angle\nANGLE: eye-level, 85mm equivalent\nLIGHTING: golden hour rim light, soft fill\nLOGO: bottom-right, white, 8% frame\nREFERENCE: outback-black.png',
-  negative:'no CGI lens reflections, no floating objects, no text overlay'
-};
 
 function log(msg,color){
   logMsg.textContent=msg;
   logDot.style.background=color||'var(--green)';
   logDot.style.boxShadow=`0 0 6px ${color||'var(--green)'}`;
   const now=new Date();
-  logTime.textContent=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+':'+now.getSeconds().toString().padStart(2,'0');
+  logTime.textContent=now.toLocaleTimeString('en-US',{hour12:false});
 }
 
-function setConveyor(idx){
-  for(let i=0;i<6;i++){
-    const el=document.getElementById('cv-'+i);
-    el.className='conveyor-item'+(i<idx?' done':i===idx?' active':'');
-  }
-}
-
+function setCV(idx){for(let i=0;i<12;i++){const el=document.getElementById('cv-'+i);if(el)el.className='conveyor-item'+(i<idx?' done':i===idx?' active':'')}}
 function wait(ms){return new Promise(r=>setTimeout(r,ms))}
 
-async function typeText(el,text,speed=30){
-  el.textContent='';
-  for(let i=0;i<text.length;i++){
-    el.textContent+=text[i];
-    await wait(speed);
-  }
-}
+// ========== PHASE 1: CONTENT PIPELINE ==========
 
-// STEP 0: INTRO
 function showIntro(){
-  setConveyor(0);
+  setCV(0);
   scene.innerHTML=`
-    <div class="animate-in" style="text-align:center;padding:40px 0">
+    <div class="animate-in" style="text-align:center;padding:30px 0">
       <div class="agent">
-        <div class="agent-body" style="background:rgba(34,211,238,.1);width:100px;height:100px;font-size:50px;border-radius:24px">🤖</div>
-        <div class="agent-name" style="color:var(--accent);font-size:14px;margin-top:12px">You are the Orchestrator</div>
-        <div class="agent-status" style="max-width:400px;margin-top:8px;line-height:1.6">You command a team of AI agents. Each one has a specialty. Your job: run the content pipeline and produce a Meta Ad from scratch.</div>
+        <div class="agent-body" style="background:rgba(34,211,238,.1);width:90px;height:90px;font-size:44px;border-radius:22px">🤖</div>
+        <div class="agent-name" style="color:var(--accent);font-size:13px;margin-top:10px">You are the Orchestrator</div>
+        <div class="agent-status" style="max-width:420px;margin-top:8px;line-height:1.6;font-size:12px">Command AI agents to create content, generate ads, then watch customers flow through your CRM. The full funnel.</div>
       </div>
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="startPipeline()">Start Pipeline &rarr;</button>
-      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="step1()">Start Pipeline &rarr;</button></div>
     </div>`;
-  log('System ready. Awaiting your command, Orchestrator.');
 }
 
-// STEP 1: CAPTION GENERATION
-async function startPipeline(){
-  step=1;setConveyor(1);
-  log('Deploying Caption Agent...','var(--accent2)');
-
+async function step1(){
+  setCV(1);log('Deploying Caption Agent...','var(--accent2)');
   scene.innerHTML=`
-    <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="display:flex;gap:24px;align-items:flex-start">
       <div class="agent" style="flex-shrink:0">
-        <div class="thought" id="thought1">Hmm, what angle should I use...</div>
-        <div class="agent-body thinking" id="agent1" style="background:rgba(167,139,250,.1)">📝</div>
+        <div class="thought" id="t1">What angle works here...</div>
+        <div class="agent-body thinking" id="a1" style="background:rgba(167,139,250,.1)">📝</div>
         <div class="agent-name" style="color:var(--accent2)">Caption Agent</div>
-        <div class="agent-status" id="agent1-status">Initializing...</div>
+        <div class="agent-status" id="s1">Calibrating...</div>
       </div>
-      <div class="workspace" style="flex:1">
-        <div class="workspace-label m">Caption Workspace</div>
-        <div id="captions-output"></div>
-      </div>
+      <div class="workspace" style="flex:1"><div class="workspace-label m">Captions</div><div id="out1"></div></div>
     </div>
-    <div class="btn-row"><button class="btn btn-primary" id="btn-approve-captions" disabled onclick="approveCapts()">Approve Captions</button></div>`;
-
-  await wait(500);
-  document.getElementById('thought1').classList.add('visible');
-  document.getElementById('agent1-status').textContent='Analyzing rejected combos...';
-  log('Caption Agent loading calibration data...','var(--accent2)');
-
-  await wait(1500);
-  document.getElementById('thought1').textContent='Identity angle + POV hook. Let\'s go.';
-  document.getElementById('agent1-status').textContent='Writing captions...';
-  document.getElementById('agent1').className='agent-body working';
-  log('Caption Agent writing... (Identity x POV)','var(--accent2)');
-
-  const output=document.getElementById('captions-output');
-  for(let i=0;i<captions.length;i++){
-    await wait(1200);
-    const paper=document.createElement('div');
-    paper.className='paper';
-    paper.innerHTML=`<div class="label">#${captions[i].id} // ${captions[i].angle} x ${captions[i].hook}</div><div style="white-space:pre-line;font-size:11px;color:var(--muted)">${captions[i].caption.substring(0,120)}...</div>`;
-    output.appendChild(paper);
-    await wait(100);
-    paper.classList.add('visible');
-    log(`Caption ${i+1}/3 written: ${captions[i].angle} x ${captions[i].hook}`,'var(--accent2)');
-  }
-
-  await wait(500);
-  document.getElementById('thought1').textContent='3 captions ready! All validated.';
-  document.getElementById('agent1').className='agent-body celebrating';
-  document.getElementById('agent1-status').textContent='3 captions ready';
-  document.getElementById('btn-approve-captions').disabled=false;
-  log('Caption Agent: 3 captions written and validated. Awaiting your approval.','var(--green)');
-}
-
-// STEP 2: APPROVE CAPTIONS
-async function approveCapts(){
-  step=2;setConveyor(2);
-  log('Captions APPROVED. Deploying Prompt Writer Agent...','var(--accent)');
-
-  scene.innerHTML=`
-    <div style="display:flex;gap:32px;align-items:flex-start">
-      <div class="agent" style="flex-shrink:0">
-        <div class="thought" id="thought2">Reading caption... visualizing the scene...</div>
-        <div class="agent-body thinking" id="agent2" style="background:rgba(244,114,182,.1)">🎨</div>
-        <div class="agent-name" style="color:var(--pink)">Prompt Writer</div>
-        <div class="agent-status" id="agent2-status">Loading product reference...</div>
-      </div>
-      <div class="workspace" style="flex:1">
-        <div class="workspace-label m">Prompt Workspace</div>
-        <div id="prompt-output"></div>
-      </div>
-    </div>
-    <div class="btn-row"><button class="btn btn-primary" id="btn-gen-image" disabled onclick="genImage()">Send to Image Generator &rarr;</button></div>`;
-
-  await wait(800);
-  document.getElementById('thought2').classList.add('visible');
-  log('Prompt Writer reading caption #20260324-001...','var(--pink)');
-
-  await wait(1500);
-  document.getElementById('thought2').textContent='Outback Black... golden hour... rooftop.';
-  document.getElementById('agent2').className='agent-body working';
-  document.getElementById('agent2-status').textContent='Crafting structured prompt...';
-  log('Prompt Writer crafting scene: rooftop Manila, golden hour','var(--pink)');
-
-  const output=document.getElementById('prompt-output');
-  const fields=[
-    {label:'Headline',value:promptData.headline},
-    {label:'Scene',value:promptData.scene},
-    {label:'Render Notes',value:promptData.render_notes},
-    {label:'Negative',value:promptData.negative}
-  ];
-
-  for(let i=0;i<fields.length;i++){
+    <div class="btn-row"><button class="btn btn-primary" id="btn1" disabled onclick="step2()">Approve &rarr;</button></div>`;
+  await wait(500);document.getElementById('t1').classList.add('visible');
+  await wait(1000);document.getElementById('s1').textContent='Writing captions...';document.getElementById('a1').className='agent-body working';
+  const out=document.getElementById('out1');
+  for(let i=0;i<3;i++){
     await wait(1000);
-    const paper=document.createElement('div');
-    paper.className='paper';
-    paper.innerHTML=`<div class="label">${fields[i].label}</div><div style="white-space:pre-line;font-size:11px;color:var(--muted)">${fields[i].value}</div>`;
-    output.appendChild(paper);
-    await wait(100);
-    paper.classList.add('visible');
-    log(`Prompt field written: ${fields[i].label}`,'var(--pink)');
+    const p=document.createElement('div');p.className='paper';
+    p.innerHTML=`<div class="label">#${captions[i].id} // ${captions[i].angle} x ${captions[i].hook}</div><div style="color:var(--muted)">${captions[i].caption.substring(0,100)}...</div>`;
+    out.appendChild(p);await wait(80);p.classList.add('visible');
+    log(`Caption ${i+1}/3: ${captions[i].angle} x ${captions[i].hook}`,'var(--accent2)');
   }
-
-  await wait(800);
-
-  // VALIDATOR
-  document.getElementById('thought2').textContent='Running quality gate...';
-  document.getElementById('agent2-status').textContent='Validator checking...';
-  log('Gatekeeper Agent validating prompt... checking product fidelity, color logic, composition','var(--amber)');
-
-  await wait(2000);
-  const verdict=document.createElement('div');
-  verdict.className='paper';
-  verdict.innerHTML=`<div class="label" style="color:var(--green)">Validator Verdict: PASS</div><div style="font-size:11px;color:var(--green)">Product fidelity OK. Headline convention OK. No lens color violations. Ready for image generation.</div>`;
-  output.appendChild(verdict);
-  await wait(100);verdict.classList.add('visible');
-
-  document.getElementById('agent2').className='agent-body celebrating';
-  document.getElementById('agent2-status').textContent='Prompt validated';
-  document.getElementById('btn-gen-image').disabled=false;
-  log('Prompt PASSED validation. Ready for image generation.','var(--green)');
+  await wait(500);document.getElementById('a1').className='agent-body celebrating';document.getElementById('t1').textContent='3 captions validated!';
+  document.getElementById('btn1').disabled=false;log('3 captions ready. Awaiting approval.','var(--green)');
 }
 
-// STEP 3: IMAGE GENERATION
-async function genImage(){
-  step=3;setConveyor(3);
-  log('Deploying Image Generator Agent... connecting to kie.ai','var(--amber)');
-
+async function step2(){
+  setCV(2);log('Deploying Prompt Writer...','var(--pink)');
   scene.innerHTML=`
-    <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="display:flex;gap:24px;align-items:flex-start">
       <div class="agent" style="flex-shrink:0">
-        <div class="thought visible" id="thought3">Sending to Nano Banana 2...</div>
-        <div class="agent-body working" id="agent3" style="background:rgba(245,158,11,.1)">📸</div>
-        <div class="agent-name" style="color:var(--amber)">Image Generator</div>
-        <div class="agent-status" id="agent3-status">Connecting to kie.ai API...</div>
+        <div class="thought visible">Outback Black... rooftop scene...</div>
+        <div class="agent-body working" style="background:rgba(244,114,182,.1)">🎨</div>
+        <div class="agent-name" style="color:var(--pink)">Prompt Writer</div>
+        <div class="agent-status" id="s2">Crafting prompt...</div>
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;align-items:center">
-        <div class="img-gen generating" id="img-box">
-          <div class="placeholder">🖼</div>
-          <div style="font-size:11px;color:var(--muted)" id="img-status">Generating...</div>
-          <div class="progress" id="img-progress" style="width:0%"></div>
-        </div>
-        <div class="metrics" id="gen-metrics" style="width:100%;opacity:0">
-          <div class="metric"><div class="num" style="color:var(--accent)">4:5</div><div class="label m">Aspect Ratio</div></div>
-          <div class="metric"><div class="num" style="color:var(--amber)">2K</div><div class="label m">Resolution</div></div>
-          <div class="metric"><div class="num" style="color:var(--green)">NB2</div><div class="label m">Model</div></div>
-        </div>
-      </div>
+      <div class="workspace" style="flex:1"><div class="workspace-label m">Structured Prompt</div><div id="out2"></div></div>
     </div>
-    <div class="btn-row"><button class="btn btn-primary" id="btn-review" disabled onclick="reviewImage()">Review Image &rarr;</button></div>`;
-
-  await wait(1000);
-  document.getElementById('img-progress').style.width='30%';
-  document.getElementById('agent3-status').textContent='API request sent...';
-  log('kie.ai API: request sent, polling for result...','var(--amber)');
-
-  await wait(2000);
-  document.getElementById('img-progress').style.width='60%';
-  document.getElementById('thought3').textContent='Rendering at 2K resolution...';
-  document.getElementById('agent3-status').textContent='Image rendering...';
-  log('kie.ai: image rendering in progress...','var(--amber)');
-
-  await wait(2000);
-  document.getElementById('img-progress').style.width='90%';
-  document.getElementById('agent3-status').textContent='Downloading result...';
-
-  await wait(1000);
-  document.getElementById('img-progress').style.width='100%';
-  document.getElementById('img-box').className='img-gen done';
-  document.getElementById('img-status').textContent='Generated';
-  document.getElementById('img-status').style.color='var(--green)';
-  document.getElementById('agent3').className='agent-body celebrating';
-  document.getElementById('agent3-status').textContent='Image ready';
-  document.getElementById('thought3').textContent='Looks great! Uploading backup to Drive...';
-  document.getElementById('gen-metrics').style.opacity='1';
-  document.getElementById('btn-review').disabled=false;
-
-  log('Image generated successfully. Backed up to Google Drive.','var(--green)');
+    <div class="btn-row"><button class="btn btn-primary" id="btn2" disabled onclick="step3()">Generate Image &rarr;</button></div>`;
+  const fields=[['Headline','DUBERY OUTBACK'],['Scene','Golden hour rooftop, Manila skyline, warm amber light'],['Render Notes','Centered hero, 85mm, golden hour rim light'],['Validator','PASS -- product fidelity OK, no violations']];
+  const out=document.getElementById('out2');
+  for(const[l,v]of fields){
+    await wait(800);const p=document.createElement('div');p.className='paper';
+    p.innerHTML=`<div class="label"${l==='Validator'?' style="color:var(--green)"':''}>${l}</div><div style="color:var(--muted)">${v}</div>`;
+    out.appendChild(p);await wait(80);p.classList.add('visible');log(`Prompt: ${l}`,'var(--pink)');
+  }
+  await wait(400);document.getElementById('btn2').disabled=false;log('Prompt validated. Ready for image gen.','var(--green)');
 }
 
-// STEP 4: REVIEW
-async function reviewImage(){
-  step=4;setConveyor(4);
-  log('Image ready for your review, Orchestrator.','var(--accent)');
+async function step3(){
+  setCV(3);log('Connecting to kie.ai Nano Banana 2...','var(--amber)');
+  scene.innerHTML=`
+    <div style="text-align:center">
+      <div class="agent"><div class="thought visible">Rendering at 2K...</div><div class="agent-body working" style="background:rgba(245,158,11,.1)">📸</div>
+        <div class="agent-name" style="color:var(--amber)">Image Generator</div><div class="agent-status" id="s3">Sending to API...</div></div>
+      <div class="img-gen generating" id="imgbox"><div style="font-size:40px;opacity:.3">🖼</div><div style="font-size:10px;color:var(--muted)" id="imgst">Generating...</div><div class="progress" id="imgpr" style="width:0%"></div></div>
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="btn3" disabled onclick="step4()">Review &rarr;</button></div>`;
+  await wait(1000);document.getElementById('imgpr').style.width='40%';document.getElementById('s3').textContent='Rendering...';
+  await wait(2000);document.getElementById('imgpr').style.width='80%';
+  await wait(1500);document.getElementById('imgpr').style.width='100%';document.getElementById('imgbox').className='img-gen done';
+  document.getElementById('imgst').textContent='Done';document.getElementById('imgst').style.color='var(--green)';
+  document.getElementById('btn3').disabled=false;log('Image generated. Backed up to Drive.','var(--green)');
+}
 
+async function step4(){
+  setCV(4);log('Your decision, Orchestrator.','var(--accent)');
   scene.innerHTML=`
     <div style="text-align:center" class="animate-in">
-      <div style="font-size:14px;font-weight:600;margin-bottom:16px">Your Decision, Orchestrator</div>
-      <div class="review-card" style="border-color:var(--accent)">
-        <div style="font-size:48px;margin-bottom:8px">🖼</div>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Dubery Outback // Golden Hour Rooftop</div>
-        <div style="font-size:11px;color:var(--muted)">928 x 1152px // JPEG // 640KB</div>
-      </div>
-      <div style="font-size:12px;color:var(--muted);margin:16px 0">Does this image meet your standards?</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:12px">Review Image</div>
+      <div style="font-size:48px;margin:16px">🖼</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Dubery Outback // Golden Hour Rooftop // 928x1152px</div>
       <div class="btn-row">
-        <button class="btn btn-primary" onclick="approve()">Approve ✓</button>
-        <button class="btn btn-secondary" onclick="reject()">Reject & Regenerate</button>
+        <button class="btn btn-primary" onclick="step5()">Approve ✓</button>
+        <button class="btn btn-secondary" onclick="rejectImg()">Reject</button>
       </div>
     </div>`;
 }
 
-async function reject(){
-  log('Image REJECTED. Regenerating with adjusted parameters...','var(--amber)');
-  scene.innerHTML=`
-    <div style="text-align:center;padding:40px" class="animate-in">
-      <div class="agent">
-        <div class="agent-body working" style="background:rgba(245,158,11,.1);font-size:40px">📸</div>
-        <div class="agent-name" style="color:var(--amber)">Image Generator</div>
-        <div class="agent-status">Regenerating with feedback...</div>
-      </div>
-      <div style="margin-top:16px;font-size:12px;color:var(--muted)">The agent adjusts parameters and tries again.</div>
-      <div style="margin-top:8px;font-size:12px;color:var(--accent)">This is the agentic advantage: autonomous retry with learning.</div>
-    </div>`;
-  await wait(3000);
-  log('Regeneration complete. Showing updated image.','var(--green)');
-  reviewImage();
+async function rejectImg(){
+  log('REJECTED. Agent regenerating with adjusted parameters...','var(--amber)');
+  scene.innerHTML=`<div style="text-align:center;padding:30px" class="animate-in">
+    <div class="agent-body working" style="background:rgba(245,158,11,.1);font-size:36px;margin:0 auto">📸</div>
+    <div style="margin-top:12px;font-size:12px;color:var(--muted)">Regenerating with feedback...</div>
+    <div style="margin-top:6px;font-size:11px;color:var(--accent)">Autonomous retry -- the agentic advantage.</div></div>`;
+  await wait(2500);step4();
 }
 
-async function approve(){
-  step=5;setConveyor(5);
-  log('Image APPROVED. Deploying Ad Staging Agent...','var(--green)');
-
+async function step5(){
+  setCV(5);log('Staging ad on Meta...','var(--accent)');
   scene.innerHTML=`
     <div style="text-align:center" class="animate-in">
-      <div class="agent" style="margin-bottom:20px">
-        <div class="thought visible" id="thought5">Staging ad on Meta... PAUSED status.</div>
-        <div class="agent-body working" style="background:rgba(34,211,238,.1);font-size:40px">📣</div>
-        <div class="agent-name" style="color:var(--accent)">Ad Staging Agent</div>
-        <div class="agent-status" id="agent5-status">Connecting to Meta Ads API...</div>
-      </div>
-      <div class="ad-preview" id="ad-preview" style="opacity:0">
-        <div class="ad-img">🖼</div>
-        <div class="ad-caption" style="font-size:12px;line-height:1.6">POV: You walked into the office and everyone asked where you got your shades.<br><br>Dubery Outback. P699 lang.<br>Bundle 2 pairs for P1,200.<br><br>COD Metro Manila. Same-day delivery.</div>
-        <div class="ad-meta"><span>DuberyMNL</span><span style="color:var(--green)">STAGED (PAUSED)</span></div>
+      <div class="agent"><div class="thought visible">Uploading to Meta Ads API...</div>
+        <div class="agent-body working" style="background:rgba(34,211,238,.1)">📣</div>
+        <div class="agent-name" style="color:var(--accent)">Ad Staging Agent</div><div class="agent-status" id="s5">Connecting...</div></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;max-width:280px;margin:16px auto;opacity:0;transition:opacity .5s" id="adprev">
+        <div style="height:140px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">🖼</div>
+        <div style="font-size:11px;line-height:1.5;margin-bottom:6px">POV: You walked into the office and everyone asked where you got your shades...</div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted)"><span>DuberyMNL</span><span style="color:var(--green)">STAGED</span></div>
       </div>
     </div>`;
-
+  await wait(1500);document.getElementById('s5').textContent='Creative uploaded...';
+  await wait(1000);document.getElementById('adprev').style.opacity='1';
+  await wait(1000);log('Ad staged on Meta (PAUSED). Content pipeline complete!','var(--green)');
   await wait(1500);
-  document.getElementById('agent5-status').textContent='Ad creative uploaded...';
-  log('Meta Ads API: uploading creative...','var(--accent)');
+  // TRANSITION TO PHASE 2
+  showPhase2Intro();
+}
 
-  await wait(1500);
-  document.getElementById('agent5-status').textContent='Caption + CTA attached...';
+// ========== PHASE 2: CUSTOMER JOURNEY ==========
 
-  await wait(1000);
-  document.getElementById('ad-preview').style.opacity='1';
-  document.getElementById('ad-preview').className='ad-preview animate-in';
-  document.getElementById('agent5-status').textContent='Ad staged successfully';
-  document.getElementById('thought5').textContent='Done! Ad is live (paused). Ready when you are.';
+async function showPhase2Intro(){
+  document.getElementById('phase2-label').hidden=false;
+  document.getElementById('conveyor2').hidden=false;
+  setCV(6);
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center;padding:20px 0">
+      <div style="font-size:48px;margin-bottom:12px">🎯</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px">Content Pipeline Complete</div>
+      <div style="font-size:13px;color:var(--muted);max-width:420px;margin:0 auto 20px;line-height:1.6">Now watch what happens when a customer sees your ad. The CRM takes over.</div>
+      <button class="btn btn-primary" onclick="crm1()">Launch Ad &rarr;</button>
+    </div>`;
+  log('Phase 2: Customer Journey. Ad is live on Facebook.','var(--accent2)');
+}
 
-  await wait(1500);
-  log('Pipeline complete. Ad staged on Meta (PAUSED). Ready to launch.','var(--green)');
+async function crm1(){
+  setCV(6);log('Ad is live. A customer sees it on Facebook...','var(--accent2)');
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center">
+      <div class="customer" style="margin:0 auto"><div class="avatar">👤</div><div><div style="font-weight:600">Maria Santos</div><div style="font-size:10px;color:var(--muted)">Scrolling Facebook, Quezon City</div></div></div>
+      <div style="margin:20px auto;max-width:280px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="height:120px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">🖼</div>
+        <div style="font-size:11px;line-height:1.5">POV: You walked into the office and everyone asked where you got your shades...</div>
+        <div style="margin-top:10px;text-align:center"><span style="background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);padding:4px 12px;border-radius:6px;font-size:10px;color:var(--accent);cursor:pointer" onclick="crm2()">Shop Now &rarr;</span></div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px">Customer clicks the ad...</div>
+    </div>`;
+}
 
-  await wait(1000);
-  showFinal();
+async function crm2(){
+  setCV(7);log('Customer landed on duberymnl.com','var(--green)');
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center">
+      <div style="font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">duberymnl.com</div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;max-width:320px;margin:0 auto">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px">Dubery Outback</div>
+        <div style="height:100px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:10px">🕶</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px">
+          <span>P699 single</span><span style="color:var(--accent)">P1,200 bundle</span>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:12px">COD Metro Manila // Same-day delivery</div>
+        <button class="btn btn-primary" style="width:100%" onclick="crm3()">Order Now</button>
+      </div>
+      <div class="metrics" style="max-width:320px;margin:12px auto">
+        <div class="metric"><div class="num" style="color:var(--accent);font-size:14px">3.2s</div><div class="label m">Page Load</div></div>
+        <div class="metric"><div class="num" style="color:var(--green);font-size:14px">Mobile</div><div class="label m">Optimized</div></div>
+        <div class="metric"><div class="num" style="color:var(--amber);font-size:14px">Dark</div><div class="label m">Mode</div></div>
+      </div>
+    </div>`;
+}
+
+async function crm3(){
+  setCV(8);log('Customer filling order form...','var(--amber)');
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center">
+      <div style="font-size:13px;font-weight:600;margin-bottom:12px">Order Form Submitted</div>
+      <div class="lead-card">
+        <div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">New Order</div>
+        <div class="field"><span class="k">Name</span><span class="v">Maria Santos</span></div>
+        <div class="field"><span class="k">Phone</span><span class="v">0917-***-4821</span></div>
+        <div class="field"><span class="k">Product</span><span class="v">Dubery Outback (Black) x1</span></div>
+        <div class="field"><span class="k">Amount</span><span class="v" style="color:var(--accent)">P699</span></div>
+        <div class="field"><span class="k">Payment</span><span class="v">COD</span></div>
+        <div class="field"><span class="k">Delivery</span><span class="v">Same-day, QC Metro Manila</span></div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin:12px 0">Form submits to Google Apps Script &rarr; Google Sheet</div>
+      <button class="btn btn-primary" onclick="crm4()">Process Lead &rarr;</button>
+    </div>`;
+}
+
+async function crm4(){
+  setCV(9);log('Lead captured. CRM processing...','var(--green)');
+  scene.innerHTML=`
+    <div class="animate-in">
+      <div style="text-align:center;margin-bottom:16px">
+        <div class="agent"><div class="agent-body working" style="background:rgba(16,185,129,.1);font-size:32px;width:60px;height:60px;border-radius:14px">📋</div>
+        <div class="agent-name" style="color:var(--green)">CRM Agent</div><div class="agent-status">Processing lead...</div></div>
+      </div>
+      <div id="notifications"></div>
+      <div class="btn-row"><button class="btn btn-primary" id="btn-chat" disabled onclick="crm5()">Watch Chatbot &rarr;</button></div>
+    </div>`;
+  const notifs=[
+    {icon:'📥',text:'Lead captured in Google Sheet',color:'var(--green)'},
+    {icon:'🏷',text:'Auto-tagged: HOT LEAD (clicked ad + ordered)',color:'var(--amber)'},
+    {icon:'📱',text:'Auto-reply sent via Facebook Messenger',color:'var(--accent)'},
+    {icon:'📧',text:'Confirmation email sent to Maria',color:'var(--accent2)'},
+    {icon:'🔔',text:'RA notified: New order from QC!',color:'var(--pink)'}
+  ];
+  const box=document.getElementById('notifications');
+  for(const n of notifs){
+    await wait(800);
+    const el=document.createElement('div');el.className='notification';
+    el.innerHTML=`<div class="icon">${n.icon}</div><div style="flex:1">${n.text}</div><div class="m" style="font-size:9px;color:${n.color}">NOW</div>`;
+    box.appendChild(el);await wait(80);el.classList.add('visible');
+    log(n.text,n.color);
+  }
+  await wait(500);document.getElementById('btn-chat').disabled=false;
+}
+
+async function crm5(){
+  setCV(10);log('Chatbot engaging customer on Messenger...','var(--accent)');
+  scene.innerHTML=`
+    <div class="animate-in">
+      <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:12px">
+        <div class="agent" style="flex-shrink:0">
+          <div class="agent-body working" style="background:rgba(34,211,238,.1);font-size:28px;width:56px;height:56px;border-radius:14px">🤖</div>
+          <div class="agent-name" style="color:var(--accent);font-size:9px">Chatbot</div>
+        </div>
+        <div style="flex:1">
+          <div class="workspace-label m">Facebook Messenger</div>
+          <div id="chat" style="margin-top:8px"></div>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" id="btn-fulfill" disabled onclick="crm6()">Fulfill Order &rarr;</button></div>
+    </div>`;
+  const msgs=[
+    {type:'customer-msg',text:"Hi, I just ordered the Outback Black. When will it arrive?"},
+    {type:'bot-msg',text:"Hi Maria! 😊 Thanks for your order! Since you're in QC, Metro Manila, your Dubery Outback will be delivered same-day via Lalamove. You'll receive a tracking link shortly. Payment is COD -- P699."},
+    {type:'customer-msg',text:"Nice! Can I add another pair? The Bandits Series?"},
+    {type:'bot-msg',text:"Great choice! I can upgrade you to our Bundle Deal -- 2 pairs for P1,200 (save P198). Want me to update your order to Outback Black + Bandits Glossy Black?"},
+    {type:'customer-msg',text:"Yes please! P1,200 bundle. 🔥"},
+    {type:'bot-msg',text:"Done! ✅ Order updated to Bundle (P1,200 COD). You'll get both pairs today. Anything else I can help with?"}
+  ];
+  const chat=document.getElementById('chat');
+  for(const m of msgs){
+    await wait(1200);
+    const el=document.createElement('div');el.className='chat-bubble '+m.type;el.textContent=m.text;
+    chat.appendChild(el);await wait(80);el.classList.add('visible');
+    if(m.type==='bot-msg')log('Chatbot: '+m.text.substring(0,50)+'...','var(--accent)');
+  }
+  await wait(500);document.getElementById('btn-fulfill').disabled=false;
+  log('Chatbot upsold P699 to P1,200 bundle. Lead upgraded.','var(--green)');
+}
+
+async function crm6(){
+  setCV(11);log('Order fulfillment...','var(--green)');
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center">
+      <div style="font-size:48px;margin-bottom:12px">📦</div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:8px">Order Fulfilled</div>
+      <div class="lead-card">
+        <div class="field"><span class="k">Customer</span><span class="v">Maria Santos</span></div>
+        <div class="field"><span class="k">Product</span><span class="v">Bundle: Outback + Bandits</span></div>
+        <div class="field"><span class="k">Amount</span><span class="v" style="color:var(--green)">P1,200 (upsold from P699)</span></div>
+        <div class="field"><span class="k">Delivery</span><span class="v">Lalamove, same-day</span></div>
+        <div class="field"><span class="k">Status</span><span class="v"><span class="lead-tag" style="background:rgba(16,185,129,.15);color:var(--green)">DELIVERED</span></span></div>
+      </div>
+    </div>`;
+  await wait(2000);showFinal();
 }
 
 function showFinal(){
-  setConveyor(6);
+  setCV(12);
   scene.innerHTML=`
     <div class="final animate-in">
-      <div style="font-size:64px;margin-bottom:16px">🎉</div>
-      <h2>Pipeline Complete</h2>
-      <p>You just orchestrated an AI content pipeline that went from idea to staged Meta Ad. Captions generated, prompts written, images created, quality validated, ad staged. One human decision. Everything else was autonomous.</p>
-      <div class="metrics" style="max-width:400px;margin:24px auto">
-        <div class="metric"><div class="num" style="color:var(--accent)">5</div><div class="label m">AI Agents</div></div>
+      <div style="font-size:56px;margin-bottom:12px">🏆</div>
+      <h2>Full Funnel Complete</h2>
+      <p>From idea to delivered product. AI agents handled content creation, ad staging, customer engagement, upselling, and fulfillment tracking. One orchestrator. One human decision.</p>
+      <div class="metrics" style="max-width:500px;margin:20px auto">
+        <div class="metric"><div class="num" style="color:var(--accent)">7</div><div class="label m">AI Agents</div></div>
         <div class="metric"><div class="num" style="color:var(--green)">1</div><div class="label m">Human Decision</div></div>
-        <div class="metric"><div class="num" style="color:var(--amber)">&lt;2min</div><div class="label m">Total Time</div></div>
+        <div class="metric"><div class="num" style="color:var(--amber)">P1,200</div><div class="label m">Revenue</div></div>
+        <div class="metric"><div class="num" style="color:var(--pink)">+72%</div><div class="label m">Upsell</div></div>
       </div>
-      <p style="font-size:13px">This is what <strong style="color:var(--accent)">RAS AI Solutions</strong> builds.<br>Not demos. Real systems. Running real businesses.</p>
-      <div class="btn-row" style="margin-top:24px">
+      <p style="font-size:12px">This is what <strong style="color:var(--accent)">RAS AI Solutions</strong> builds.<br>Not demos. Real systems. Real revenue.</p>
+      <div class="btn-row" style="margin-top:20px">
         <button class="btn btn-primary" onclick="location.href='../index.html'">See Full Portfolio &rarr;</button>
-        <button class="btn btn-secondary" onclick="restart()">Run Again</button>
+        <button class="btn btn-secondary" onclick="location.reload()">Run Again</button>
       </div>
     </div>`;
-  log('System idle. Pipeline complete. Awaiting next command, Orchestrator.','var(--green)');
+  log('Full funnel complete. 7 agents. 1 human decision. P1,200 revenue.','var(--green)');
 }
 
-function restart(){step=0;showIntro()}
-
-// INIT
 showIntro();
 </script>
 </body>
