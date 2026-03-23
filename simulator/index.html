@@ -209,7 +209,7 @@ async function step1(){
       </div>
       <div class="workspace" style="flex:1"><div class="workspace-label m">Captions</div><div id="out1"></div></div>
     </div>
-    <div class="btn-row"><button class="btn btn-primary" id="btn1" disabled onclick="step2()">Approve &rarr;</button></div>`;
+    <div class="btn-row"><button class="btn btn-primary" id="btn1" disabled onclick="step2()">Approve &rarr;</button><button class="btn btn-secondary" id="btn1r" disabled onclick="regenCaption()">Regenerate</button></div>`;
   await wait(500);document.getElementById('t1').classList.add('visible');
   await wait(1000);document.getElementById('s1').textContent='Writing captions...';document.getElementById('a1').className='agent-body working';
   const out=document.getElementById('out1');
@@ -221,7 +221,35 @@ async function step1(){
     log(`Caption ${i+1}/3: ${captions[i].angle} x ${captions[i].hook}`,'var(--accent2)');
   }
   await wait(500);document.getElementById('a1').className='agent-body celebrating';document.getElementById('t1').textContent='3 captions validated!';
-  document.getElementById('btn1').disabled=false;log('3 captions ready. Awaiting approval.','var(--green)');
+  document.getElementById('btn1').disabled=false;document.getElementById('btn1r').disabled=false;log('3 captions ready. Approve or regenerate.','var(--green)');
+}
+
+async function regenCaption(){
+  log('Caption REJECTED. Agent regenerating with new angle...','var(--amber)');
+  const out=document.getElementById('out1');
+  out.innerHTML='';
+  document.getElementById('btn1').disabled=true;
+  document.getElementById('a1').className='agent-body thinking';
+  document.getElementById('t1').textContent='Rejected combo noted. Trying new angle...';
+  document.getElementById('s1').textContent='Recalibrating...';
+  await wait(1000);
+  document.getElementById('a1').className='agent-body working';
+  document.getElementById('s1').textContent='Rewriting captions...';
+  document.getElementById('t1').textContent='Status/Glow Up + Flex hook. Fresh take.';
+  const alts=[
+    {id:'20260324-004',angle:'Status/Glow Up',hook:'Flex',caption:"Yung tipong P699 lang pero akala nila designer.\n\nDubery Outback. Polarized. Hindi plastik.\nBundle 2 for P1,200."},
+    {id:'20260324-005',angle:'Convenience',hook:'Speed',caption:"Order now, delivered today.\n\nDubery Bandits Series. P699.\nCOD Metro Manila. Walang hassle."},
+    {id:'20260324-006',angle:'Lifestyle',hook:'Identity',caption:"Hindi ka naman celebrity pero bakit ang daming nag-aask ng shades mo?\n\nDubery Rasta. P699. Bundle P1,200."}
+  ];
+  for(let i=0;i<3;i++){
+    await wait(1000);
+    const p=document.createElement('div');p.className='paper';
+    p.innerHTML=`<div class="label">#${alts[i].id} // ${alts[i].angle} x ${alts[i].hook}</div><div style="color:var(--muted)">${alts[i].caption.substring(0,100)}...</div>`;
+    out.appendChild(p);await wait(80);p.classList.add('visible');
+    log(`Regen caption ${i+1}/3: ${alts[i].angle} x ${alts[i].hook}`,'var(--accent2)');
+  }
+  await wait(500);document.getElementById('a1').className='agent-body celebrating';document.getElementById('t1').textContent='Fresh batch ready!';
+  document.getElementById('btn1').disabled=false;log('3 new captions ready. Approve or regenerate again.','var(--green)');
 }
 
 async function step2(){
