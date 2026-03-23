@@ -334,7 +334,7 @@ async function step5(){
   const apiLog=document.getElementById('api-log');
   const lines=[
     {text:'> POST /oauth/access_token -- Bearer token OK',color:'var(--green)',delay:600},
-    {text:'> POST /v21.0/act_208147463/campaigns -- created',color:'var(--accent)',delay:700},
+    {text:'> POST /v21.0/act_90210BUJAH/campaigns -- created',color:'var(--accent)',delay:700},
     {text:'> POST /v21.0/{campaign_id}/adsets -- Metro Manila, 18-35',color:'var(--accent)',delay:600},
     {text:'> POST /v21.0/{adset_id}/adcreatives -- image + caption uploaded',color:'var(--accent)',delay:600},
     {text:'  Integrated: Meta Marketing API + Sheets API + Drive API + kie.ai',color:'var(--accent2)',delay:500},
@@ -502,7 +502,7 @@ async function crm1(){
   setCV(6);log('Ad is live. A customer sees it on Facebook...','var(--accent2)');
   scene.innerHTML=`
     <div class="animate-in" style="text-align:center">
-      <div class="customer" style="margin:0 auto"><div class="avatar">👤</div><div><div style="font-weight:600">Maria Santos</div><div style="font-size:10px;color:var(--muted)">Scrolling Facebook, Quezon City</div></div></div>
+      <div class="customer" style="margin:0 auto"><div class="avatar">👤</div><div><div style="font-weight:600">Arabelle Reyes</div><div style="font-size:10px;color:var(--muted)">Scrolling Facebook, Antipolo</div></div></div>
       <div style="margin:20px auto;max-width:280px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px">
         <div style="height:120px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">😎</div>
         <div style="font-size:11px;line-height:1.5">POV: You walked into the office and everyone asked where you got your shades...</div>
@@ -541,8 +541,8 @@ async function crm3(){
       <div style="font-size:13px;font-weight:600;margin-bottom:12px">Order Form Submitted</div>
       <div class="lead-card">
         <div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">New Order</div>
-        <div class="field"><span class="k">Name</span><span class="v">Maria Santos</span></div>
-        <div class="field"><span class="k">Phone</span><span class="v">0917-***-4821</span></div>
+        <div class="field"><span class="k">Name</span><span class="v">Arabelle Reyes</span></div>
+        <div class="field"><span class="k">Phone</span><span class="v">0917-***-BUKI</span></div>
         <div class="field"><span class="k">Product</span><span class="v">Dubery Outback (Black) x1</span></div>
         <div class="field"><span class="k">Amount</span><span class="v" style="color:var(--accent)">P699</span></div>
         <div class="field"><span class="k">Payment</span><span class="v">COD</span></div>
@@ -569,7 +569,7 @@ async function crm4(){
     {icon:'🏷',text:'Auto-tagged: HOT LEAD (clicked ad + ordered)',color:'var(--amber)'},
     {icon:'📱',text:'Auto-reply sent via Facebook Messenger',color:'var(--accent)'},
     {icon:'📧',text:'Confirmation email sent to Maria',color:'var(--accent2)'},
-    {icon:'🔔',text:'RA notified: New order from QC!',color:'var(--pink)'}
+    {icon:'🔔',text:'RA notified: New order! Bujah says papa may sale!',color:'var(--pink)'}
   ];
   const box=document.getElementById('notifications');
   for(const n of notifs){
@@ -600,8 +600,8 @@ async function crm5(){
     </div>`;
   const msgs=[
     {type:'customer-msg',text:"Hi, I just ordered the Outback Black. When will it arrive?"},
-    {type:'bot-msg',text:"Hi Maria! 😊 Thanks for your order! Since you're in QC, Metro Manila, your Dubery Outback will be delivered same-day via Lalamove. You'll receive a tracking link shortly. Payment is COD -- P699."},
-    {type:'customer-msg',text:"Nice! Can I add another pair? The Bandits Series?"},
+    {type:'bot-msg',text:"Hi Arabelle! 😊 Thanks for your order! Since you're in QC, Metro Manila, your Dubery Outback will be delivered same-day via Lalamove. You'll receive a tracking link shortly. Payment is COD -- P699."},
+    {type:'customer-msg',text:"Nice! Can I add one for Buki? The Bandits Series?"},
     {type:'bot-msg',text:"Great choice! I can upgrade you to our Bundle Deal -- 2 pairs for P1,200 (save P198). Want me to update your order to Outback Black + Bandits Glossy Black?"},
     {type:'customer-msg',text:"Yes please! P1,200 bundle. 🔥"},
     {type:'bot-msg',text:"Done! ✅ Order updated to Bundle (P1,200 COD). You'll get both pairs today. Anything else I can help with?"}
@@ -624,7 +624,7 @@ async function crm6(){
       <div style="font-size:48px;margin-bottom:12px">📦</div>
       <div style="font-size:16px;font-weight:700;margin-bottom:8px">Order Fulfilled</div>
       <div class="lead-card">
-        <div class="field"><span class="k">Customer</span><span class="v">Maria Santos</span></div>
+        <div class="field"><span class="k">Customer</span><span class="v">Arabelle Reyes</span></div>
         <div class="field"><span class="k">Product</span><span class="v">Bundle: Outback + Bandits</span></div>
         <div class="field"><span class="k">Amount</span><span class="v" style="color:var(--green)">P1,200 (upsold from P699)</span></div>
         <div class="field"><span class="k">Delivery</span><span class="v">Lalamove, same-day</span></div>
