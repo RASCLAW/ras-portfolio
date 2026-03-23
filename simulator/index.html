@@ -281,7 +281,7 @@ async function step3(){
     <div style="text-align:center">
       <div class="agent"><div class="thought visible">Rendering at 2K...</div><div class="agent-body working" style="background:rgba(245,158,11,.1)">📸</div>
         <div class="agent-name" style="color:var(--amber)">Image Generator</div><div class="agent-status" id="s3">Sending to API...</div></div>
-      <div class="img-gen generating" id="imgbox"><div style="font-size:40px;opacity:.3">🖼</div><div style="font-size:10px;color:var(--muted)" id="imgst">Generating...</div><div class="progress" id="imgpr" style="width:0%"></div></div>
+      <div class="img-gen generating" id="imgbox"><div style="font-size:40px;opacity:.3">😎</div><div style="font-size:10px;color:var(--muted)" id="imgst">Generating...</div><div class="progress" id="imgpr" style="width:0%"></div></div>
     </div>
     <div class="btn-row"><button class="btn btn-primary" id="btn3" disabled onclick="step4()">Review &rarr;</button></div>`;
   await wait(1000);document.getElementById('imgpr').style.width='40%';document.getElementById('s3').textContent='Rendering...';
@@ -296,7 +296,7 @@ async function step4(){
   scene.innerHTML=`
     <div style="text-align:center" class="animate-in">
       <div style="font-size:13px;font-weight:600;margin-bottom:12px">Review Image</div>
-      <div style="font-size:48px;margin:16px">🖼</div>
+      <div style="font-size:64px;margin:16px">😎</div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Dubery Outback // Golden Hour Rooftop // 928x1152px</div>
       <div class="btn-row">
         <button class="btn btn-primary" onclick="step5()">Approve ✓</button>
@@ -315,24 +315,219 @@ async function rejectImg(){
 }
 
 async function step5(){
-  setCV(5);log('Staging ad on Meta...','var(--accent)');
+  setCV(5);log('Initializing Ad Staging Agent...','var(--accent)');
   scene.innerHTML=`
-    <div style="text-align:center" class="animate-in">
-      <div class="agent"><div class="thought visible">Uploading to Meta Ads API...</div>
+    <div style="display:flex;gap:24px;align-items:flex-start">
+      <div class="agent" style="flex-shrink:0">
+        <div class="thought" id="t5">Authenticating with Meta...</div>
+        <div class="agent-body thinking" id="a5" style="background:rgba(34,211,238,.1)">📣</div>
+        <div class="agent-name" style="color:var(--accent)">Ad Staging Agent</div>
+        <div class="agent-status" id="s5">Booting up...</div>
+      </div>
+      <div class="workspace" style="flex:1">
+        <div class="workspace-label m">Meta Ads API Integration</div>
+        <div id="api-log" style="font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.8"></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="btn5" disabled onclick="step5b()">Configure Targeting &rarr;</button></div>`;
+  await wait(400);document.getElementById('t5').classList.add('visible');
+  const apiLog=document.getElementById('api-log');
+  const lines=[
+    {text:'> POST /oauth/access_token',color:'var(--muted)',delay:600},
+    {text:'  Bearer token validated (permanent Page Access Token)',color:'var(--green)',delay:500},
+    {text:'> GET /v21.0/act_208147463/campaigns',color:'var(--muted)',delay:700},
+    {text:'  Connected to Ad Account: DuberyMNL',color:'var(--green)',delay:400},
+    {text:'> POST /v21.0/act_208147463/campaigns',color:'var(--muted)',delay:800},
+    {text:'  Campaign created: "Outback-Golden-Hour-2026-03"',color:'var(--accent)',delay:400},
+    {text:'> POST /v21.0/{campaign_id}/adsets',color:'var(--muted)',delay:600},
+    {text:'  Ad Set created: Metro Manila, 18-35, Interest: Fashion',color:'var(--accent)',delay:400},
+    {text:'> POST /v21.0/{adset_id}/adcreatives',color:'var(--muted)',delay:700},
+    {text:'  Creative uploaded: image_hash + caption attached',color:'var(--accent)',delay:400},
+    {text:'  Tools integrated: Meta Marketing API, Google Drive API, kie.ai API',color:'var(--accent2)',delay:500},
+  ];
+  document.getElementById('a5').className='agent-body working';document.getElementById('s5').textContent='Connecting to Meta Ads API...';
+  for(const l of lines){
+    await wait(l.delay);
+    const div=document.createElement('div');div.style.color=l.color;div.style.opacity='0';div.style.transition='opacity .3s';div.textContent=l.text;
+    apiLog.appendChild(div);await wait(50);div.style.opacity='1';
+    if(l.text.startsWith('>'))log(l.text.replace('> ','API: '),'var(--accent)');
+  }
+  document.getElementById('t5').textContent='Campaign structure built';document.getElementById('s5').textContent='API calls complete';
+  document.getElementById('btn5').disabled=false;log('Campaign + Ad Set + Creative created via Meta API.','var(--green)');
+}
+
+async function step5b(){
+  log('Configuring audience targeting + budget...','var(--accent)');
+  scene.innerHTML=`
+    <div style="display:flex;gap:24px;align-items:flex-start" class="animate-in">
+      <div class="agent" style="flex-shrink:0">
+        <div class="thought visible">Optimizing for conversions...</div>
         <div class="agent-body working" style="background:rgba(34,211,238,.1)">📣</div>
-        <div class="agent-name" style="color:var(--accent)">Ad Staging Agent</div><div class="agent-status" id="s5">Connecting...</div></div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;max-width:280px;margin:16px auto;opacity:0;transition:opacity .5s" id="adprev">
-        <div style="height:140px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">🖼</div>
-        <div style="font-size:11px;line-height:1.5;margin-bottom:6px">POV: You walked into the office and everyone asked where you got your shades...</div>
-        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted)"><span>DuberyMNL</span><span style="color:var(--green)">STAGED</span></div>
+        <div class="agent-name" style="color:var(--accent)">Ad Staging Agent</div>
+        <div class="agent-status">Configuring...</div>
+      </div>
+      <div class="workspace" style="flex:1">
+        <div class="workspace-label m">Ad Configuration</div>
+        <div id="cfg-out"></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="btn5b" disabled onclick="step5c()">Submit for Review &rarr;</button></div>`;
+  const configs=[
+    {label:'Targeting',value:'Metro Manila, Age 18-35, Interests: Fashion, Streetwear, Sunglasses'},
+    {label:'Placement',value:'Facebook Feed, Instagram Feed, Stories (auto-placement)'},
+    {label:'Budget',value:'P300/day, 7-day schedule, Conversions objective'},
+    {label:'Bid Strategy',value:'Lowest cost (auto-bid), daily budget cap'},
+    {label:'Tracking',value:'Meta Pixel installed on duberymnl.com, UTM params auto-tagged'},
+    {label:'Tools Used',value:'Meta Marketing API v21.0, Google Sheets API (pipeline sync), Drive API (image backup)'}
+  ];
+  const out=document.getElementById('cfg-out');
+  for(const c of configs){
+    await wait(700);
+    const p=document.createElement('div');p.className='paper';
+    p.innerHTML=`<div class="label">${c.label}</div><div style="color:var(--muted)">${c.value}</div>`;
+    out.appendChild(p);await wait(80);p.classList.add('visible');
+    log(`Config: ${c.label}`,'var(--accent)');
+  }
+  await wait(500);document.getElementById('btn5b').disabled=false;log('Ad fully configured. Ready to submit for Meta review.','var(--green)');
+}
+
+async function step5c(){
+  log('Submitting ad for Meta review...','var(--amber)');
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center">
+      <div class="agent">
+        <div class="thought visible" id="t5c">Submitting to Meta review queue...</div>
+        <div class="agent-body working" id="a5c" style="background:rgba(34,211,238,.1)">📣</div>
+        <div class="agent-name" style="color:var(--accent)">Ad Staging Agent</div>
+        <div class="agent-status" id="s5c">Submitting...</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;max-width:300px;margin:16px auto" id="review-box">
+        <div style="height:120px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">😎</div>
+        <div style="font-size:11px;line-height:1.5;margin-bottom:8px">POV: You walked into the office and everyone asked where you got your shades...</div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted)"><span>DuberyMNL</span><span id="review-status" style="color:var(--amber)">IN REVIEW...</span></div>
+        <div style="margin-top:8px;height:3px;background:#1a1a2e;border-radius:2px;overflow:hidden"><div id="review-bar" style="height:100%;background:var(--amber);width:0%;transition:width 2s linear"></div></div>
       </div>
     </div>`;
-  await wait(1500);document.getElementById('s5').textContent='Creative uploaded...';
-  await wait(1000);document.getElementById('adprev').style.opacity='1';
-  await wait(1000);log('Ad staged on Meta (PAUSED). Content pipeline complete!','var(--green)');
+  await wait(500);document.getElementById('review-bar').style.width='60%';
+  await wait(2000);document.getElementById('review-bar').style.width='90%';
   await wait(1500);
-  // TRANSITION TO PHASE 2
-  showPhase2Intro();
+  // REJECTION
+  document.getElementById('review-bar').style.width='100%';
+  document.getElementById('review-bar').style.background='var(--red)';
+  document.getElementById('review-status').textContent='REJECTED';
+  document.getElementById('review-status').style.color='var(--red)';
+  document.getElementById('a5c').className='agent-body';
+  document.getElementById('t5c').textContent='Policy violation detected...';
+  document.getElementById('s5c').textContent='Ad rejected by Meta';
+  log('AD REJECTED -- Meta policy violation detected!','var(--red)');
+  await wait(2000);step5d();
+}
+
+async function step5d(){
+  log('Agent diagnosing rejection reason...','var(--red)');
+  scene.innerHTML=`
+    <div class="animate-in">
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div class="agent" style="flex-shrink:0">
+          <div class="thought visible" id="t5d" style="border-color:var(--red);color:var(--red)">Something went wrong. Diagnosing...</div>
+          <div class="agent-body thinking" id="a5d" style="background:rgba(239,68,68,.1)">📣</div>
+          <div class="agent-name" style="color:var(--red)">Ad Staging Agent</div>
+          <div class="agent-status" id="s5d" style="color:var(--red)">Error recovery mode</div>
+        </div>
+        <div class="workspace" style="flex:1;border-color:var(--red)">
+          <div class="workspace-label m" style="color:var(--red)">Autonomous Error Recovery</div>
+          <div id="fix-log" style="font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.8"></div>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" id="btn5d" disabled onclick="step5e()">Watch Agent Fix It &rarr;</button></div>
+    </div>`;
+  const fixLog=document.getElementById('fix-log');
+  const diag=[
+    {text:'> GET /v21.0/{ad_id}/review_feedback',color:'var(--muted)',delay:700},
+    {text:'  Rejection reason: AD_POLICY_TEXT_OVERLAY',color:'var(--red)',delay:600},
+    {text:'  "Image contains text covering >20% of image area"',color:'var(--red)',delay:500},
+    {text:'',color:'var(--muted)',delay:300},
+    {text:'[DIAGNOSIS] Text overlay on generated image exceeds Meta 20% rule.',color:'var(--amber)',delay:700},
+    {text:'[PLAN] 1. Pull original prompt from Google Sheets API',color:'var(--accent)',delay:500},
+    {text:'[PLAN] 2. Modify render_notes: "no text overlay, product only"',color:'var(--accent)',delay:500},
+    {text:'[PLAN] 3. Re-generate image via kie.ai API',color:'var(--accent)',delay:500},
+    {text:'[PLAN] 4. Validate new image, re-upload, resubmit to Meta',color:'var(--accent)',delay:500},
+    {text:'',color:'var(--muted)',delay:200},
+    {text:'No human intervention required. Executing fix autonomously.',color:'var(--green)',delay:600},
+  ];
+  for(const l of diag){
+    await wait(l.delay);
+    if(!l.text){const br=document.createElement('div');br.innerHTML='&nbsp;';fixLog.appendChild(br);continue;}
+    const div=document.createElement('div');div.style.color=l.color;div.style.opacity='0';div.style.transition='opacity .3s';div.textContent=l.text;
+    fixLog.appendChild(div);await wait(50);div.style.opacity='1';
+  }
+  document.getElementById('t5d').textContent='Root cause found. I can fix this.';document.getElementById('t5d').style.borderColor='var(--amber)';document.getElementById('t5d').style.color='var(--text)';
+  document.getElementById('s5d').textContent='Fix plan ready';document.getElementById('s5d').style.color='var(--amber)';
+  document.getElementById('btn5d').disabled=false;log('Agent diagnosed: text overlay violation. Autonomous fix plan ready.','var(--amber)');
+}
+
+async function step5e(){
+  log('Agent executing autonomous fix...','var(--accent)');
+  scene.innerHTML=`
+    <div class="animate-in">
+      <div style="text-align:center;margin-bottom:16px">
+        <div class="agent">
+          <div class="thought visible" id="t5e">Regenerating clean creative...</div>
+          <div class="agent-body working" id="a5e" style="background:rgba(245,158,11,.1)">📣</div>
+          <div class="agent-name" style="color:var(--amber)">Ad Staging Agent</div>
+          <div class="agent-status" id="s5e">Fixing...</div>
+        </div>
+      </div>
+      <div id="fix-steps"></div>
+      <div class="btn-row"><button class="btn btn-primary" id="btn5e" disabled onclick="step5f()">Continue &rarr;</button></div>
+    </div>`;
+  const steps=[
+    {icon:'📋',text:'Pulled original prompt from Google Sheets (Sheets API)',status:'Done',color:'var(--green)'},
+    {icon:'✏️',text:'Modified render_notes: removed text overlay instructions',status:'Done',color:'var(--green)'},
+    {icon:'📸',text:'Re-generated image via kie.ai API (Nano Banana 2, 2K)',status:'Rendering...',color:'var(--amber)',wait:2000,final:'Done',finalColor:'var(--green)'},
+    {icon:'✅',text:'Image validated: 0% text overlay, product hero only',status:'Pass',color:'var(--green)'},
+    {icon:'📤',text:'Re-uploaded creative to Meta via Marketing API v21.0',status:'Done',color:'var(--green)'},
+    {icon:'🔄',text:'Resubmitted ad for Meta review',status:'Pending...',color:'var(--amber)',wait:2500,final:'APPROVED',finalColor:'var(--green)'},
+  ];
+  const box=document.getElementById('fix-steps');
+  for(const s of steps){
+    await wait(800);
+    const el=document.createElement('div');el.className='notification';
+    el.innerHTML=`<div class="icon">${s.icon}</div><div style="flex:1;font-size:11px">${s.text}</div><div class="m" id="fs-${box.children.length}" style="font-size:9px;color:${s.color}">${s.status}</div>`;
+    box.appendChild(el);await wait(80);el.classList.add('visible');
+    log(s.text,s.color);
+    if(s.wait){
+      const id='fs-'+String(box.children.length-1);
+      await wait(s.wait);
+      document.getElementById(id).textContent=s.final;document.getElementById(id).style.color=s.finalColor;
+      if(s.final==='APPROVED')log('Meta APPROVED the resubmitted ad!','var(--green)');
+    }
+  }
+  document.getElementById('t5e').textContent='Fixed it. No human needed.';
+  document.getElementById('a5e').className='agent-body celebrating';document.getElementById('a5e').style.background='rgba(16,185,129,.1)';
+  document.getElementById('s5e').textContent='Problem solved autonomously';document.getElementById('s5e').style.color='var(--green)';
+  document.getElementById('btn5e').disabled=false;
+  log('Autonomous recovery complete. Ad live on Meta. Zero human intervention.','var(--green)');
+}
+
+async function step5f(){
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center;padding:20px 0">
+      <div style="background:var(--card);border:2px solid var(--green);border-radius:12px;padding:16px;max-width:300px;margin:0 auto">
+        <div style="height:120px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">😎</div>
+        <div style="font-size:11px;line-height:1.5;margin-bottom:8px">POV: You walked into the office and everyone asked where you got your shades...</div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted)"><span>DuberyMNL</span><span style="color:var(--green);font-weight:700">LIVE ON META</span></div>
+      </div>
+      <div class="metrics" style="max-width:450px;margin:16px auto">
+        <div class="metric"><div class="num" style="color:var(--accent);font-size:13px">6</div><div class="label m">API Calls</div></div>
+        <div class="metric"><div class="num" style="color:var(--green);font-size:13px">3</div><div class="label m">APIs Used</div></div>
+        <div class="metric"><div class="num" style="color:var(--red);font-size:13px">1</div><div class="label m">Error Fixed</div></div>
+        <div class="metric"><div class="num" style="color:var(--amber);font-size:13px">0</div><div class="label m">Human Help</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.6;max-width:400px;margin:0 auto">Meta Marketing API + Google Sheets API + kie.ai API + Google Drive API -- orchestrated by one agent, with autonomous error recovery.</div>
+    </div>`;
+  log('Ad staging complete. Content pipeline finished!','var(--green)');
+  await wait(3000);showPhase2Intro();
 }
 
 // ========== PHASE 2: CUSTOMER JOURNEY ==========
@@ -357,7 +552,7 @@ async function crm1(){
     <div class="animate-in" style="text-align:center">
       <div class="customer" style="margin:0 auto"><div class="avatar">👤</div><div><div style="font-weight:600">Maria Santos</div><div style="font-size:10px;color:var(--muted)">Scrolling Facebook, Quezon City</div></div></div>
       <div style="margin:20px auto;max-width:280px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px">
-        <div style="height:120px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">🖼</div>
+        <div style="height:120px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:10px">😎</div>
         <div style="font-size:11px;line-height:1.5">POV: You walked into the office and everyone asked where you got your shades...</div>
         <div style="margin-top:10px;text-align:center"><span style="background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);padding:4px 12px;border-radius:6px;font-size:10px;color:var(--accent);cursor:pointer" onclick="crm2()">Shop Now &rarr;</span></div>
       </div>
@@ -372,7 +567,7 @@ async function crm2(){
       <div style="font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">duberymnl.com</div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;max-width:320px;margin:0 auto">
         <div style="font-size:16px;font-weight:700;margin-bottom:8px">Dubery Outback</div>
-        <div style="height:100px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:10px">🕶</div>
+        <div style="height:100px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:10px">😎</div>
         <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px">
           <span>P699 single</span><span style="color:var(--accent)">P1,200 bundle</span>
         </div>
