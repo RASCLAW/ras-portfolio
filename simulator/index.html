@@ -329,21 +329,15 @@ async function step5(){
         <div id="api-log" style="font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.8"></div>
       </div>
     </div>
-    <div class="btn-row"><button class="btn btn-primary" id="btn5" disabled onclick="step5b()">Configure Targeting &rarr;</button></div>`;
+    <div class="btn-row"><button class="btn btn-primary" id="btn5" disabled onclick="step5c()">Submit for Review &rarr;</button></div>`;
   await wait(400);document.getElementById('t5').classList.add('visible');
   const apiLog=document.getElementById('api-log');
   const lines=[
-    {text:'> POST /oauth/access_token',color:'var(--muted)',delay:600},
-    {text:'  Bearer token validated (permanent Page Access Token)',color:'var(--green)',delay:500},
-    {text:'> GET /v21.0/act_208147463/campaigns',color:'var(--muted)',delay:700},
-    {text:'  Connected to Ad Account: DuberyMNL',color:'var(--green)',delay:400},
-    {text:'> POST /v21.0/act_208147463/campaigns',color:'var(--muted)',delay:800},
-    {text:'  Campaign created: "Outback-Golden-Hour-2026-03"',color:'var(--accent)',delay:400},
-    {text:'> POST /v21.0/{campaign_id}/adsets',color:'var(--muted)',delay:600},
-    {text:'  Ad Set created: Metro Manila, 18-35, Interest: Fashion',color:'var(--accent)',delay:400},
-    {text:'> POST /v21.0/{adset_id}/adcreatives',color:'var(--muted)',delay:700},
-    {text:'  Creative uploaded: image_hash + caption attached',color:'var(--accent)',delay:400},
-    {text:'  Tools integrated: Meta Marketing API, Google Drive API, kie.ai API',color:'var(--accent2)',delay:500},
+    {text:'> POST /oauth/access_token -- Bearer token OK',color:'var(--green)',delay:600},
+    {text:'> POST /v21.0/act_208147463/campaigns -- created',color:'var(--accent)',delay:700},
+    {text:'> POST /v21.0/{campaign_id}/adsets -- Metro Manila, 18-35',color:'var(--accent)',delay:600},
+    {text:'> POST /v21.0/{adset_id}/adcreatives -- image + caption uploaded',color:'var(--accent)',delay:600},
+    {text:'  Integrated: Meta Marketing API + Sheets API + Drive API + kie.ai',color:'var(--accent2)',delay:500},
   ];
   document.getElementById('a5').className='agent-body working';document.getElementById('s5').textContent='Connecting to Meta Ads API...';
   for(const l of lines){
@@ -354,41 +348,6 @@ async function step5(){
   }
   document.getElementById('t5').textContent='Campaign structure built';document.getElementById('s5').textContent='API calls complete';
   document.getElementById('btn5').disabled=false;log('Campaign + Ad Set + Creative created via Meta API.','var(--green)');
-}
-
-async function step5b(){
-  log('Configuring audience targeting + budget...','var(--accent)');
-  scene.innerHTML=`
-    <div style="display:flex;gap:24px;align-items:flex-start" class="animate-in">
-      <div class="agent" style="flex-shrink:0">
-        <div class="thought visible">Optimizing for conversions...</div>
-        <div class="agent-body working" style="background:rgba(34,211,238,.1)">📣</div>
-        <div class="agent-name" style="color:var(--accent)">Ad Staging Agent</div>
-        <div class="agent-status">Configuring...</div>
-      </div>
-      <div class="workspace" style="flex:1">
-        <div class="workspace-label m">Ad Configuration</div>
-        <div id="cfg-out"></div>
-      </div>
-    </div>
-    <div class="btn-row"><button class="btn btn-primary" id="btn5b" disabled onclick="step5c()">Submit for Review &rarr;</button></div>`;
-  const configs=[
-    {label:'Targeting',value:'Metro Manila, Age 18-35, Interests: Fashion, Streetwear, Sunglasses'},
-    {label:'Placement',value:'Facebook Feed, Instagram Feed, Stories (auto-placement)'},
-    {label:'Budget',value:'P300/day, 7-day schedule, Conversions objective'},
-    {label:'Bid Strategy',value:'Lowest cost (auto-bid), daily budget cap'},
-    {label:'Tracking',value:'Meta Pixel installed on duberymnl.com, UTM params auto-tagged'},
-    {label:'Tools Used',value:'Meta Marketing API v21.0, Google Sheets API (pipeline sync), Drive API (image backup)'}
-  ];
-  const out=document.getElementById('cfg-out');
-  for(const c of configs){
-    await wait(700);
-    const p=document.createElement('div');p.className='paper';
-    p.innerHTML=`<div class="label">${c.label}</div><div style="color:var(--muted)">${c.value}</div>`;
-    out.appendChild(p);await wait(80);p.classList.add('visible');
-    log(`Config: ${c.label}`,'var(--accent)');
-  }
-  await wait(500);document.getElementById('btn5b').disabled=false;log('Ad fully configured. Ready to submit for Meta review.','var(--green)');
 }
 
 async function step5c(){
@@ -444,16 +403,11 @@ async function step5d(){
   const fixLog=document.getElementById('fix-log');
   const diag=[
     {text:'> GET /v21.0/{ad_id}/review_feedback',color:'var(--muted)',delay:700},
-    {text:'  Rejection reason: AD_POLICY_TEXT_OVERLAY',color:'var(--red)',delay:600},
-    {text:'  "Image contains text covering >20% of image area"',color:'var(--red)',delay:500},
+    {text:'  Rejection: AD_POLICY_TEXT_OVERLAY -- text >20% of image',color:'var(--red)',delay:700},
     {text:'',color:'var(--muted)',delay:300},
-    {text:'[DIAGNOSIS] Text overlay on generated image exceeds Meta 20% rule.',color:'var(--amber)',delay:700},
-    {text:'[PLAN] 1. Pull original prompt from Google Sheets API',color:'var(--accent)',delay:500},
-    {text:'[PLAN] 2. Modify render_notes: "no text overlay, product only"',color:'var(--accent)',delay:500},
-    {text:'[PLAN] 3. Re-generate image via kie.ai API',color:'var(--accent)',delay:500},
-    {text:'[PLAN] 4. Validate new image, re-upload, resubmit to Meta',color:'var(--accent)',delay:500},
-    {text:'',color:'var(--muted)',delay:200},
-    {text:'No human intervention required. Executing fix autonomously.',color:'var(--green)',delay:600},
+    {text:'[DIAGNOSIS] Text overlay exceeds Meta 20% rule.',color:'var(--amber)',delay:700},
+    {text:'[PLAN] Modify prompt, re-gen via kie.ai, re-upload, resubmit',color:'var(--accent)',delay:600},
+    {text:'No human intervention required. Executing fix.',color:'var(--green)',delay:600},
   ];
   for(const l of diag){
     await wait(l.delay);
@@ -482,12 +436,10 @@ async function step5e(){
       <div class="btn-row"><button class="btn btn-primary" id="btn5e" disabled onclick="step5f()">Continue &rarr;</button></div>
     </div>`;
   const steps=[
-    {icon:'📋',text:'Pulled original prompt from Google Sheets (Sheets API)',status:'Done',color:'var(--green)'},
-    {icon:'✏️',text:'Modified render_notes: removed text overlay instructions',status:'Done',color:'var(--green)'},
-    {icon:'📸',text:'Re-generated image via kie.ai API (Nano Banana 2, 2K)',status:'Rendering...',color:'var(--amber)',wait:2000,final:'Done',finalColor:'var(--green)'},
-    {icon:'✅',text:'Image validated: 0% text overlay, product hero only',status:'Pass',color:'var(--green)'},
-    {icon:'📤',text:'Re-uploaded creative to Meta via Marketing API v21.0',status:'Done',color:'var(--green)'},
-    {icon:'🔄',text:'Resubmitted ad for Meta review',status:'Pending...',color:'var(--amber)',wait:2500,final:'APPROVED',finalColor:'var(--green)'},
+    {icon:'✏️',text:'Modified prompt via Sheets API: "no text overlay, product only"',status:'Done',color:'var(--green)'},
+    {icon:'📸',text:'Re-generated image via kie.ai API (2K, clean creative)',status:'Rendering...',color:'var(--amber)',wait:2000,final:'Done',finalColor:'var(--green)'},
+    {icon:'📤',text:'Re-uploaded to Meta Marketing API + backed up to Drive',status:'Done',color:'var(--green)'},
+    {icon:'🔄',text:'Resubmitted for Meta review',status:'Pending...',color:'var(--amber)',wait:2500,final:'APPROVED',finalColor:'var(--green)'},
   ];
   const box=document.getElementById('fix-steps');
   for(const s of steps){
