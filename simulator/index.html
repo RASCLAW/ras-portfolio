@@ -104,7 +104,45 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-s
 .final h2{font-size:26px;font-weight:700;margin-bottom:12px}
 .final p{color:var(--muted);font-size:13px;line-height:1.7;max-width:500px;margin:0 auto 20px}
 
-@media(max-width:600px){.conveyor-item{width:32px;height:32px;font-size:14px}}
+@media(max-width:600px){
+  .conveyor-item{width:36px;height:36px;font-size:16px;border-radius:8px}
+  .sim{padding:16px}
+  .header{padding:28px 0 12px}
+  .header h1{font-size:22px}
+  .header p{font-size:14px;line-height:1.5}
+  .stage{padding:12px 0 56px}
+  .scene{min-height:auto}
+  .agent-body{width:64px!important;height:64px!important;font-size:32px!important;border-radius:16px!important}
+  .agent-name{font-size:12px;letter-spacing:0.5px}
+  .agent-status{font-size:11px}
+  .thought{font-size:12px;padding:8px 12px;max-width:240px;white-space:normal}
+  .workspace{padding:14px;margin-top:14px}
+  .workspace-label{font-size:10px}
+  .paper{padding:10px 12px;font-size:13px;line-height:1.6}
+  .paper .label{font-size:10px}
+  .btn{padding:12px 22px;font-size:14px}
+  .btn-row{flex-wrap:wrap;gap:12px}
+  .img-gen{width:140px;height:175px}
+  .notification{padding:10px 14px;font-size:13px}
+  .notification .icon{font-size:16px}
+  .metrics{grid-template-columns:repeat(2,1fr);gap:8px}
+  .metric{padding:10px}
+  .metric .num{font-size:16px}
+  .metric .label{font-size:9px}
+  .log{padding:6px 12px}
+  .log .msg{font-size:10px}
+  .final h2{font-size:22px}
+  .final p{font-size:14px}
+  .chat-bubble{font-size:13px;padding:10px 14px}
+  .customer{padding:8px 12px;font-size:13px}
+  .customer .avatar{width:28px;height:28px;font-size:14px}
+  .lead-card{padding:14px}
+  .lead-card .field{font-size:12px;padding:8px 0}
+  .phase-label{font-size:10px;letter-spacing:2px}
+  .conveyor{gap:4px;padding:6px 0}
+  .conveyor-arrow{font-size:11px}
+  .scene div[style]{max-width:100%}
+}
 </style>
 </head>
 <body>
@@ -113,7 +151,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-s
   <div class="header">
     <div class="tag m">Interactive Simulation</div>
     <h1>Full Funnel Orchestrator</h1>
-    <p>You are Claude Code. Run the content pipeline, then watch the customer journey unfold.</p>
+    <p>You are the operator. Run the content pipeline, then watch the customer journey unfold.</p>
   </div>
 
   <!-- PHASE 1: CONTENT -->
@@ -155,7 +193,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-s
 
 <div class="log">
   <div class="dot" style="background:var(--green);box-shadow:0 0 6px var(--green)" id="log-dot"></div>
-  <div class="msg m" id="log-msg">System ready. Awaiting your command, Orchestrator.</div>
+  <div class="msg m" id="log-msg">System ready. Press start to begin.</div>
   <div class="time m" id="log-time"></div>
 </div>
 
