@@ -1,0 +1,667 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - generic:
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+      - generic:
+        - img
+    - navigation [ref=e4]:
+      - generic [ref=e5]:
+        - link "JPS Logo" [ref=e472] [cursor=pointer]:
+          - /url: "#home"
+          - img "JPS Logo" [ref=e473]
+        - generic [ref=e6]:
+          - list [ref=e7]:
+            - listitem [ref=e8]:
+              - link "Home" [ref=e9] [cursor=pointer]:
+                - /url: "#home"
+                - text: Home
+            - listitem [ref=e11]:
+              - link "Services" [ref=e12] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e13]:
+              - link "Experience" [ref=e14] [cursor=pointer]:
+                - /url: "#experience"
+            - listitem [ref=e15]:
+              - link "Projects" [ref=e16] [cursor=pointer]:
+                - /url: "#works"
+            - listitem [ref=e17]:
+              - link "Certificates" [ref=e18] [cursor=pointer]:
+                - /url: "#certificates"
+            - listitem [ref=e19]:
+              - link "Pricing" [ref=e20] [cursor=pointer]:
+                - /url: "#pricing"
+          - generic [ref=e22]:
+            - link "Let's Connect" [ref=e23] [cursor=pointer]:
+              - /url: "#contact"
+            - generic [ref=e474]:
+              - button [ref=e475] [cursor=pointer]:
+                - img [ref=e476]
+              - generic [ref=e479]:
+                - heading "Welcome! 👋" [level=3] [ref=e480]
+                - paragraph [ref=e481]: Select your preferred language
+              - generic [ref=e482]:
+                - button "🇺🇸 English" [ref=e483] [cursor=pointer]:
+                  - generic [ref=e484]: 🇺🇸
+                  - generic [ref=e485]: English
+                - button "🇪🇸 Español" [ref=e486] [cursor=pointer]:
+                  - generic [ref=e487]: 🇪🇸
+                  - generic [ref=e488]: Español
+                - button "🇩🇪 Deutsch" [ref=e489] [cursor=pointer]:
+                  - generic [ref=e490]: 🇩🇪
+                  - generic [ref=e491]: Deutsch
+                - button "🇫🇷 Français" [ref=e492] [cursor=pointer]:
+                  - generic [ref=e493]: 🇫🇷
+                  - generic [ref=e494]: Français
+                - button "🇳🇱 Nederlands" [ref=e495] [cursor=pointer]:
+                  - generic [ref=e496]: 🇳🇱
+                  - generic [ref=e497]: Nederlands
+                - button "🇮🇹 Italiano" [ref=e498] [cursor=pointer]:
+                  - generic [ref=e499]: 🇮🇹
+                  - generic [ref=e500]: Italiano
+                - button "🇧🇷 Português" [ref=e501] [cursor=pointer]:
+                  - generic [ref=e502]: 🇧🇷
+                  - generic [ref=e503]: Português
+                - button "🇸🇦 العربية" [ref=e504] [cursor=pointer]:
+                  - generic [ref=e505]: 🇸🇦
+                  - generic [ref=e506]: العربية
+                - button "🇨🇳 中文" [ref=e507] [cursor=pointer]:
+                  - generic [ref=e508]: 🇨🇳
+                  - generic [ref=e509]: 中文
+                - button "🇯🇵 日本語" [ref=e510] [cursor=pointer]:
+                  - generic [ref=e511]: 🇯🇵
+                  - generic [ref=e512]: 日本語
+                - button "🇵🇭 Tagalog" [ref=e513] [cursor=pointer]:
+                  - generic [ref=e514]: 🇵🇭
+                  - generic [ref=e515]: Tagalog
+                - button "🇰🇷 한국어" [ref=e516] [cursor=pointer]:
+                  - generic [ref=e517]: 🇰🇷
+                  - generic [ref=e518]: 한국어
+            - button "🇺🇸 EN" [ref=e25] [cursor=pointer]:
+              - generic [ref=e26]: 🇺🇸
+              - generic [ref=e27]: EN
+            - button "Toggle theme" [ref=e28] [cursor=pointer]:
+              - img [ref=e29]
+    - generic [ref=e31]:
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - generic [ref=e40]: Available for Projects
+          - heading "Jerick P. Salinas" [level=1] [ref=e41]:
+            - generic [ref=e42]: Jerick P. Salinas
+          - paragraph [ref=e43]: AI Automation Specialist | Web Designer | GoHighLevel CRM Expert
+          - paragraph [ref=e44]: Expert in AI automation, strategic web design, and GoHighLevel optimization. I create intelligent, integrated systems and elegant digital experiences that streamline operations, increase conversions, and scale revenue—quietly powerful solutions for ambitious brands.
+          - generic [ref=e45]:
+            - link "View My Work" [ref=e47] [cursor=pointer]:
+              - /url: "#works"
+              - generic [ref=e49]: View My Work
+            - button "View Resume" [ref=e51] [cursor=pointer]:
+              - generic [ref=e53]: View Resume
+        - generic [ref=e55]:
+          - generic:
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic:
+                - img
+            - generic:
+              - generic:
+                - img
+          - img "Jerick Salinas" [ref=e57]
+      - link "Scroll" [ref=e59] [cursor=pointer]:
+        - /url: "#services"
+        - generic [ref=e62]: Scroll
+    - generic [ref=e64]:
+      - generic [ref=e65]:
+        - heading "Services Offered" [level=2] [ref=e66]
+        - paragraph [ref=e67]: Expert AI automations + stunning websites + powerful GHL CRM setups. Built to save time, boost conversions, and automate your entire growth engine.
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - img [ref=e71]
+          - heading "AI Automation Specialist" [level=3] [ref=e74]
+          - paragraph [ref=e75]: I design and implement intelligent automation solutions using AI to eliminate repetitive tasks, optimize workflows, and drive efficiency for your business. From custom AI chatbots and lead nurturing sequences to process automation that integrates tools like GHL, I help you save time, reduce costs, and scale operations effortlessly—freeing you to focus on growth.
+        - generic [ref=e76]:
+          - img [ref=e78]
+          - heading "Web Designer" [level=3] [ref=e81]
+          - paragraph [ref=e82]: I create modern, responsive, high-converting websites tailored to your brand and goals. Whether it's a sleek portfolio site, lead-generating landing pages, or full e-commerce experiences, I combine clean design, intuitive UX, and performance optimization to help you attract visitors, build trust, and turn clicks into customers.
+        - generic [ref=e83]:
+          - img [ref=e85]
+          - heading "GoHighLevel (GHL) CRM Setup & Optimization" [level=3] [ref=e88]
+          - paragraph [ref=e89]: As a GoHighLevel specialist, I build, customize, and automate powerful all-in-one CRM systems for agencies and businesses. This includes white-label setups, sales pipelines, multi-channel funnels (email/SMS/voicemail), appointment booking, AI-powered conversations, and lead nurturing workflows—helping you capture more leads, close deals faster, and scale client services without the hassle of multiple tools.
+        - generic [ref=e90]:
+          - img [ref=e92]
+          - heading "Full-Stack Growth Solutions" [level=3] [ref=e97]
+          - paragraph [ref=e98]: "Combine my expertise for end-to-end results: AI-automated GHL CRM + stunning custom websites + integrated marketing funnels. Perfect for agencies looking to white-label powerful systems or businesses ready to automate lead gen, sales, and client management in one streamlined platform."
+    - generic [ref=e100]:
+      - heading "Work Experience" [level=2] [ref=e102]
+      - generic [ref=e109]:
+        - generic [ref=e110]:
+          - img [ref=e111]
+          - generic [ref=e113]: September 2018 - December 2025
+        - heading "Senior Coordinator Data Process Support" [level=3] [ref=e114]
+        - generic [ref=e115]:
+          - img [ref=e116]
+          - generic [ref=e120]: Unisys Managed Services Corporation
+        - paragraph [ref=e121]: Led data process support operations, ensuring quality standards and team performance while coordinating with clients to resolve operational issues.
+        - list [ref=e122]:
+          - listitem [ref=e123]: • Execute assigned tasks in line with project quality standards and performance metrics
+          - listitem [ref=e124]: • Learn and follow processes, policies, business rules, and proper use of IT systems
+          - listitem [ref=e125]: • Monitor team performance, time, and attendance
+          - listitem [ref=e126]: • Provide coaching and timely performance feedback to team members
+          - listitem [ref=e127]: • Report to the Area Manager and escalate issues when necessary
+          - listitem [ref=e128]: • Prepare and submit operational reports to management
+          - listitem [ref=e129]: • Coordinate with client counterparts to resolve simple to moderately complex operational issues
+    - generic [ref=e131]:
+      - generic [ref=e132]:
+        - heading "Previous Projects" [level=2] [ref=e133]
+        - paragraph [ref=e134]: A selection of automation and web design projects that produced real, measurable results—complete with detailed documentation.
+        - generic [ref=e135]:
+          - button "All" [ref=e136] [cursor=pointer]
+          - button "Zapier" [ref=e137] [cursor=pointer]
+          - button "Make.com" [ref=e138] [cursor=pointer]
+          - button "n8n" [ref=e139] [cursor=pointer]
+          - button "GoHighLevel" [ref=e140] [cursor=pointer]
+          - button "Web Design" [ref=e141] [cursor=pointer]
+      - generic [ref=e142]:
+        - generic [ref=e143]:
+          - generic [ref=e144] [cursor=pointer]:
+            - img "Smart Lead Automation with Real-Time Sales Alerts & Personalized Outreach" [ref=e145]
+            - generic [ref=e147]:
+              - img [ref=e148]
+              - text: View Workflow
+          - generic [ref=e152]:
+            - generic [ref=e153]: Zapier
+            - button [ref=e154] [cursor=pointer]:
+              - img [ref=e155]
+          - heading "Smart Lead Automation with Real-Time Sales Alerts & Personalized Outreach" [level=3] [ref=e160]
+          - paragraph [ref=e161]: Smart lead automation that enriches incoming leads, splits them by priority, notifies sales in real time, and triggers personalized outreach to accelerate conversions.
+          - generic [ref=e162]:
+            - generic [ref=e163]: Youform
+            - generic [ref=e164]: Apollo
+            - generic [ref=e165]: Google Sheets
+            - generic [ref=e166]: Gmail
+            - generic [ref=e167]: Slack
+        - generic [ref=e168]:
+          - generic [ref=e169] [cursor=pointer]:
+            - img "End-to-End Lead Management & Follow-Up Workflow" [ref=e170]
+            - generic [ref=e172]:
+              - img [ref=e173]
+              - text: View Workflow
+          - generic [ref=e177]:
+            - generic [ref=e178]: Zapier
+            - button [ref=e179] [cursor=pointer]:
+              - img [ref=e180]
+          - heading "End-to-End Lead Management & Follow-Up Workflow" [level=3] [ref=e185]
+          - generic [ref=e186]:
+            - paragraph [ref=e187]: Built an automated Asana–Gmail lead management workflow that handles follow-ups, approvals, onboarding emails, document delivery, and client communication from first contact to pro...
+            - button "Read more" [ref=e188] [cursor=pointer]:
+              - text: Read more
+              - img [ref=e189]
+          - generic [ref=e191]:
+            - generic [ref=e192]: Asana
+            - generic [ref=e193]: Gmail
+            - generic [ref=e194]: Google Drive
+        - generic [ref=e195]:
+          - generic [ref=e196] [cursor=pointer]:
+            - img "AI Content Repurposing" [ref=e197]
+            - generic [ref=e199]:
+              - img [ref=e200]
+              - text: View Workflow
+          - generic [ref=e204]:
+            - generic [ref=e205]: Zapier
+            - button [ref=e206] [cursor=pointer]:
+              - img [ref=e207]
+          - heading "AI Content Repurposing" [level=3] [ref=e212]
+          - generic [ref=e213]:
+            - paragraph [ref=e214]: This Zapier workflow automates the end-to-end process of repurposing long-form audio or video content into multiple written and social media assets. When a new media file is added ...
+            - button "Read more" [ref=e215] [cursor=pointer]:
+              - text: Read more
+              - img [ref=e216]
+          - generic [ref=e218]:
+            - generic [ref=e219]: Google Drive
+            - generic [ref=e220]: Facebook
+            - generic [ref=e221]: Discord
+        - generic [ref=e222]:
+          - generic [ref=e223] [cursor=pointer]:
+            - img "Auto Sort Gmail Attachments on Drive" [ref=e224]
+            - generic [ref=e226]:
+              - img [ref=e227]
+              - text: View Workflow
+          - generic [ref=e231]:
+            - generic [ref=e232]: Make.com
+            - button [ref=e233] [cursor=pointer]:
+              - img [ref=e234]
+          - heading "Auto Sort Gmail Attachments on Drive" [level=3] [ref=e239]
+          - generic [ref=e240]:
+            - paragraph [ref=e241]: This Make.com workflow automates the process of sorting and organizing attachments from incoming Gmail emails directly to Google Drive. When a new email arrives in Gmail, the autom...
+            - button "Read more" [ref=e242] [cursor=pointer]:
+              - text: Read more
+              - img [ref=e243]
+          - generic [ref=e245]:
+            - generic [ref=e246]: Gmail
+            - generic [ref=e247]: Google Gemini AI
+            - generic [ref=e248]: Google Drive
+            - generic [ref=e249]: Google Sheets
+        - generic [ref=e250]:
+          - generic [ref=e251] [cursor=pointer]:
+            - img "Automated Export Account Transactions from Xero to Asana" [ref=e252]
+            - generic [ref=e254]:
+              - img [ref=e255]
+              - text: View Workflow
+          - generic [ref=e259]:
+            - generic [ref=e260]: Make.com
+            - button [ref=e261] [cursor=pointer]:
+              - img [ref=e262]
+          - heading "Automated Export Account Transactions from Xero to Asana" [level=3] [ref=e267]
+          - generic [ref=e268]:
+            - paragraph [ref=e269]: This workflow automatically collects bank transaction data from Xero, organizes it into Google Sheets, converts it into a CSV file, and uploads that file as an attachment to a comp...
+            - button "Read more" [ref=e270] [cursor=pointer]:
+              - text: Read more
+              - img [ref=e271]
+          - generic [ref=e273]:
+            - generic [ref=e274]: Asana
+            - generic [ref=e275]: Xero
+            - generic [ref=e276]: Google Sheets
+    - generic [ref=e278]:
+      - generic [ref=e279]:
+        - heading "Certificates & Training" [level=2] [ref=e280]
+        - paragraph [ref=e281]: Professional certifications and training programs completed to stay at the forefront of automation and web technologies.
+      - generic [ref=e282]:
+        - generic [ref=e283]:
+          - generic [ref=e285] [cursor=pointer]:
+            - img "HighLevel CRM Full Training" [ref=e286]
+            - generic [ref=e289]:
+              - img [ref=e290]
+              - text: View Certificate
+          - generic [ref=e294]:
+            - heading "HighLevel CRM Full Training" [level=3] [ref=e295]
+            - paragraph [ref=e296]: Technical Virtual Assistants PH • January 7, 2026
+            - generic [ref=e297]:
+              - generic [ref=e298]: CRM & Pipeline Management
+              - generic [ref=e299]: Sales Funnels
+              - generic [ref=e300]: Email Marketing
+              - generic [ref=e301]: +2 more
+        - generic [ref=e302]:
+          - generic [ref=e304] [cursor=pointer]:
+            - img "No Code Automation with Make.com" [ref=e305]
+            - generic [ref=e308]:
+              - img [ref=e309]
+              - text: View Certificate
+          - generic [ref=e313]:
+            - heading "No Code Automation with Make.com" [level=3] [ref=e314]
+            - paragraph [ref=e315]: Technical Virtual Assistants PH • December 18, 2025
+            - generic [ref=e316]:
+              - generic [ref=e317]: Scenario Structure
+              - generic [ref=e318]: Filters & Triggers
+              - generic [ref=e319]: Connecting Apps
+              - generic [ref=e320]: +2 more
+        - generic [ref=e321]:
+          - generic [ref=e323] [cursor=pointer]:
+            - img "AI Automation with n8n" [ref=e324]
+            - generic [ref=e327]:
+              - img [ref=e328]
+              - text: View Certificate
+          - generic [ref=e332]:
+            - heading "AI Automation with n8n" [level=3] [ref=e333]
+            - paragraph [ref=e334]: Technical Virtual Assistants PH • December 29, 2025
+            - generic [ref=e335]:
+              - generic [ref=e336]: AI Agents & Workflows
+              - generic [ref=e337]: n8n Server Setup
+              - generic [ref=e338]: Nodes & Triggers
+              - generic [ref=e339]: +2 more
+        - generic [ref=e340]:
+          - generic [ref=e342] [cursor=pointer]:
+            - img "Prompt Engineering" [ref=e343]
+            - generic [ref=e346]:
+              - img [ref=e347]
+              - text: View Certificate
+          - generic [ref=e351]:
+            - heading "Prompt Engineering" [level=3] [ref=e352]
+            - paragraph [ref=e353]: Technical Virtual Assistants PH • December 18, 2025
+            - generic [ref=e354]:
+              - generic [ref=e355]: Prompt Fundamentals
+              - generic [ref=e356]: Practical Techniques
+              - generic [ref=e357]: Real World Scenarios
+              - generic [ref=e358]: +2 more
+        - generic [ref=e359]:
+          - generic [ref=e361] [cursor=pointer]:
+            - img "WordPress Web Page Building & Maintenance" [ref=e362]
+            - generic [ref=e365]:
+              - img [ref=e366]
+              - text: View Certificate
+          - generic [ref=e370]:
+            - heading "WordPress Web Page Building & Maintenance" [level=3] [ref=e371]
+            - paragraph [ref=e372]: Technical Virtual Assistants PH • January 5, 2026
+            - generic [ref=e373]:
+              - generic [ref=e374]: Hosting & Domain Setup
+              - generic [ref=e375]: WordPress Installation
+              - generic [ref=e376]: Administration
+              - generic [ref=e377]: +1 more
+        - generic [ref=e378]:
+          - generic [ref=e380] [cursor=pointer]:
+            - img "No Code Automation with Zapier" [ref=e381]
+            - generic [ref=e384]:
+              - img [ref=e385]
+              - text: View Certificate
+          - generic [ref=e389]:
+            - heading "No Code Automation with Zapier" [level=3] [ref=e390]
+            - paragraph [ref=e391]: Technical Virtual Assistants PH • December 17, 2025
+            - generic [ref=e392]:
+              - generic [ref=e393]: Triggers & Formatters
+              - generic [ref=e394]: Filters & Paths
+              - generic [ref=e395]: Looping & Sub Zaps
+              - generic [ref=e396]: +2 more
+    - generic [ref=e398]:
+      - generic [ref=e399]:
+        - heading "Pricing Plans" [level=2] [ref=e400]
+        - paragraph [ref=e401]: Transparent pricing for automation and web design solutions that scale with your business needs.
+      - generic [ref=e402]:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - heading "Starter" [level=3]
+              - generic:
+                - text: $499
+                - generic: /one-time
+              - paragraph: Perfect for small automations and quick wins
+              - list:
+                - listitem:
+                  - img
+                  - generic: Up to 3 workflow automations
+                - listitem:
+                  - img
+                  - generic: Basic CRM setup
+                - listitem:
+                  - img
+                  - generic: Email support
+                - listitem:
+                  - img
+                  - generic: 1 revision round
+                - listitem:
+                  - img
+                  - generic: 7-day delivery
+              - link "Get Started":
+                - /url: "#contact"
+            - generic:
+              - generic: Most Popular
+              - generic:
+                - img
+              - heading "Professional" [level=3]
+              - generic:
+                - text: $1,299
+                - generic: /one-time
+              - paragraph: Ideal for growing businesses needing robust systems
+              - list:
+                - listitem:
+                  - img
+                  - generic: Up to 10 workflow automations
+                - listitem:
+                  - img
+                  - generic: Full CRM implementation
+                - listitem:
+                  - img
+                  - generic: API integrations
+                - listitem:
+                  - img
+                  - generic: AI-powered features
+                - listitem:
+                  - img
+                  - generic: Priority support
+                - listitem:
+                  - img
+                  - generic: 3 revision rounds
+                - listitem:
+                  - img
+                  - generic: 14-day delivery
+              - link "Get Started":
+                - /url: "#contact"
+            - generic:
+              - generic:
+                - img
+              - heading "Enterprise" [level=3]
+              - generic: Custom
+              - paragraph: Complete digital transformation for your business
+              - list:
+                - listitem:
+                  - img
+                  - generic: Unlimited automations
+                - listitem:
+                  - img
+                  - generic: Custom integrations
+                - listitem:
+                  - img
+                  - generic: Dedicated support
+                - listitem:
+                  - img
+                  - generic: Strategy consulting
+                - listitem:
+                  - img
+                  - generic: Training included
+                - listitem:
+                  - img
+                  - generic: Ongoing maintenance
+                - listitem:
+                  - img
+                  - generic: Priority delivery
+              - link "Get Started":
+                - /url: "#contact"
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - heading "Web Design" [level=3]
+              - generic:
+                - text: $799
+                - generic: /one-time
+              - paragraph: Professional website that converts visitors to customers
+              - list:
+                - listitem:
+                  - img
+                  - generic: Custom WordPress/Elementor site
+                - listitem:
+                  - img
+                  - generic: Mobile responsive design
+                - listitem:
+                  - img
+                  - generic: SEO optimization
+                - listitem:
+                  - img
+                  - generic: Contact forms integration
+                - listitem:
+                  - img
+                  - generic: Speed optimization
+                - listitem:
+                  - img
+                  - generic: 2 revision rounds
+                - listitem:
+                  - img
+                  - generic: 10-day delivery
+              - link "Get Started":
+                - /url: "#contact"
+        - generic [ref=e404]:
+          - img [ref=e406]
+          - img [ref=e413]
+          - img [ref=e416]
+          - generic [ref=e419]:
+            - heading "High Value." [level=3] [ref=e420]
+            - heading "Honest Pricing." [level=3] [ref=e421]
+            - paragraph [ref=e422]: Revealing Soon.
+    - generic [ref=e424]:
+      - generic [ref=e425]:
+        - heading "Let's Connect" [level=2] [ref=e426]
+        - paragraph [ref=e427]: Let's discuss how I can help.
+      - generic [ref=e428]:
+        - generic [ref=e429]:
+          - button "Book a Call" [ref=e430] [cursor=pointer]:
+            - img [ref=e431]
+            - text: Book a Call
+          - button "Send Message" [ref=e433] [cursor=pointer]:
+            - img [ref=e434]
+            - text: Send Message
+        - paragraph [ref=e436]: Free 30-minute discovery call • No commitment required
+        - generic [ref=e438]:
+          - link "jerickpsalinas@gmail.com" [ref=e439] [cursor=pointer]:
+            - /url: mailto:jerickpsalinas@gmail.com
+            - img [ref=e440]
+            - generic [ref=e443]: jerickpsalinas@gmail.com
+          - link "JPS Services" [ref=e444] [cursor=pointer]:
+            - /url: https://www.facebook.com/JPSAutomation
+            - img [ref=e445]
+            - generic [ref=e447]: JPS Services
+          - link "Naga City, Philippines" [ref=e448] [cursor=pointer]:
+            - /url: https://maps.app.goo.gl/eGAAqTYz4DmfdaQm8
+            - img [ref=e449]
+            - generic [ref=e452]: Naga City, Philippines
+        - generic [ref=e453]:
+          - link "Upwork" [ref=e454] [cursor=pointer]:
+            - /url: https://www.upwork.com/freelancers/~01ed6e4f6ef57201fc?companyReference=1555085741777977345&mp_source=share
+            - img "Upwork" [ref=e455]
+          - link "OnlineJobs.ph" [ref=e456] [cursor=pointer]:
+            - /url: https://www.onlinejobs.ph/jobseekers/info/3142960
+            - img "OnlineJobs.ph" [ref=e457]
+          - link "LinkedIn" [ref=e458] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/jerickpsalinas
+            - img [ref=e459]
+          - link "GitHub" [ref=e463] [cursor=pointer]:
+            - /url: https://github.com/jerickpsalinas
+            - img [ref=e464]
+    - contentinfo [ref=e467]:
+      - generic [ref=e469]:
+        - img "JPS Logo" [ref=e527] [cursor=pointer]
+        - generic [ref=e470]: © 2026 JPS. All rights reserved.
+    - button "Talk to JPS AI" [ref=e529] [cursor=pointer]:
+      - generic [ref=e532]:
+        - generic [ref=e533]:
+          - img
+        - generic [ref=e534]: Talk to JPS AI
+        - img

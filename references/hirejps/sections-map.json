@@ -1,0 +1,50 @@
+[
+  {
+    "tag": "DIV",
+    "id": "root",
+    "class": "",
+    "text": "HomeServicesExperienceProjectsCertificatesPricingLet's ConnectWelcome! 👋Select your preferred language🇺🇸English🇪🇸Español🇩🇪Deutsch🇫🇷Français🇳🇱Nederlands🇮🇹Italiano🇧🇷Português🇸🇦العربية🇨"
+  },
+  {
+    "tag": "SECTION",
+    "id": "home",
+    "class": "relative min-h-screen flex items-center justify-center overflow-hidden py-20 sm:",
+    "text": "Available for ProjectsJerick P. SalinasAI Automation Specialist | Web Designer | GoHighLevel CRM ExpertExpert in AI automation, strategic web design, and GoHighLevel optimization. I create intelligent"
+  },
+  {
+    "tag": "SECTION",
+    "id": "services",
+    "class": "section-padding",
+    "text": "Services OfferedExpert AI automations + stunning websites + powerful GHL CRM setups. Built to save time, boost conversions, and automate your entire growth engine.AI Automation SpecialistI design and"
+  },
+  {
+    "tag": "SECTION",
+    "id": "experience",
+    "class": "section-padding bg-secondary/30",
+    "text": "Work ExperienceSeptember 2018 - December 2025Senior Coordinator Data Process SupportUnisys Managed Services CorporationLed data process support operations, ensuring quality standards and team performa"
+  },
+  {
+    "tag": "SECTION",
+    "id": "works",
+    "class": "section-padding",
+    "text": "Previous ProjectsA selection of automation and web design projects that produced real, measurable results—complete with detailed documentation.AllZapierMake.comn8nGoHighLevelWeb DesignView WorkflowZap"
+  },
+  {
+    "tag": "SECTION",
+    "id": "certificates",
+    "class": "section-padding bg-muted/30",
+    "text": "Certificates & TrainingProfessional certifications and training programs completed to stay at the forefront of automation and web technologies.View CertificateHighLevel CRM Full TrainingTechnical Virt"
+  },
+  {
+    "tag": "SECTION",
+    "id": "pricing",
+    "class": "section-padding",
+    "text": "Pricing PlansTransparent pricing for automation and web design solutions that scale with your business needs.Starter$499/one-timePerfect for small automations and quick winsUp to 3 workflow automation"
+  },
+  {
+    "tag": "SECTION",
+    "id": "contact",
+    "class": "section-padding",
+    "text": "Let's ConnectLet's discuss how I can help.Book a CallSend MessageFree 30-minute discovery call • No commitment requiredjerickpsalinas@gmail.comJPS ServicesNaga City, Philippines"
+  }
+]
