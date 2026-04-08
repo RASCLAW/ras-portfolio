@@ -28,9 +28,6 @@ body{font-family:'DM Sans',sans-serif;background:#fefefe;color:#2a2a3e;line-heig
 .pipeline{background:#1a1a2e;border-radius:16px;padding:20px 16px;margin:0 0 32px;display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap}
 .pipe-step{background:#e63946;color:#fff;padding:7px 0;border-radius:24px;font-size:10px;font-weight:600;font-family:'Space Grotesk',sans-serif;width:100px;text-align:center;flex-shrink:0}
 .pipe-arrow{color:#4b5563;font-size:10px;flex-shrink:0}
-.ad-filter{display:flex;gap:8px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.ad-filter button{padding:6px 14px;border:1px solid #e5e7eb;border-radius:24px;background:#fff;color:#6b7280;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
-.ad-filter button.active{background:#e63946;color:#fff;border-color:#e63946}
 .fb-post{background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
 .fb-header{display:flex;align-items:center;gap:6px;padding:8px 10px}
 .fb-avatar{width:24px;height:24px;border-radius:50%;background:#e63946;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:9px;font-family:'Space Grotesk',sans-serif}
@@ -41,29 +38,30 @@ body{font-family:'DM Sans',sans-serif;background:#fefefe;color:#2a2a3e;line-heig
 .fb-action{font-size:9px;color:#6b7280;font-weight:500;cursor:default}
 .fb-caption{font-size:8px;color:#4b5563;padding:4px 10px 6px;line-height:1.4}
 .ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
-@media(max-width:680px){.ad-grid{grid-template-columns:1fr}}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.content-card{border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);border:1px solid #f0f0f0;transition:transform .2s}
+.content-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.1)}
+.content-card img{width:100%;display:block}
+.content-card .tag{font-size:10px;font-weight:600;padding:6px 10px;color:#6b7280;text-align:center;background:#f8f9fa;font-family:'Space Grotesk',sans-serif}
 .browser{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:0 4px 20px rgba(0,0,0,0.06)}
 .browser-bar{background:#f8f9fa;padding:8px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid #e5e7eb}
 .browser-dot{width:10px;height:10px;border-radius:50%}
 .browser-url{font-size:11px;color:#9ca3af;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:4px 12px;margin-left:10px;flex:1;font-family:'Space Grotesk',sans-serif}
-.browser img{width:100%;display:block}
 .info-card{background:#f8f9fa;border:1px solid #f0f0f0;border-radius:12px;padding:16px;margin-bottom:8px}
 .info-card h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px}
 .info-card p{font-size:12px;color:#6b7280;line-height:1.6}
 .project-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
 .tech-wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
 .tech-tag{background:#f8f9fa;border:1px solid #e5e7eb;padding:6px 14px;border-radius:24px;font-size:12px;font-weight:500;color:#4b5563}
-.life-layout{display:flex;gap:20px;align-items:flex-start;margin:16px 0}
-.life-layout .browser{width:260px;flex-shrink:0}
-.life-layout .cards{flex:1}
+.tech-tag.highlight{background:#e63946;color:#fff;border-color:#e63946}
 .bg-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
 footer{text-align:center;padding:40px 0 32px;font-size:12px;color:#9ca3af;border-top:1px solid #f0f0f0;margin-top:40px}
 footer a{color:#e63946;text-decoration:none}
 @media(max-width:680px){
-  .story-grid,.bg-grid,.project-grid{grid-template-columns:1fr}
+  .story-grid,.bg-grid,.project-grid,.sim-grid{grid-template-columns:1fr}
   .ad-grid{grid-template-columns:1fr}
-  .life-layout{flex-direction:column}
-  .life-layout .browser{width:100%}
+  .content-grid{grid-template-columns:1fr 1fr}
   .hero .name{font-size:28px}
   .pipe-step{width:90px;font-size:10px;padding:6px 0}
 }
@@ -74,16 +72,18 @@ footer a{color:#e63946;text-decoration:none}
 
 <div class="hero">
   <div class="name">Ronald Adrian Sarinas</div>
-  <div class="title">AI Automation Architect</div>
-  <div class="desc">The way businesses operate is changing. AI and automation aren't coming -- they're here. I went all in. I build autonomous systems that save time, cut costs, and replace manual work with intelligent pipelines. Not because it's trendy, but because I've seen firsthand how much productivity is wasted doing things the old way. Everything on this page was built by one person and an AI partner -- proof that the right tools in the right hands can outperform entire teams.</div>
+  <div class="title">AI & Automation Specialist</div>
+  <div class="desc">I build autonomous systems that replace manual work with intelligent pipelines. Content generation, ad creative, chatbots, workflow automation, CRM integration -- all built from scratch using AI tools and deployed to production. Everything on this page was built by one person and an AI partner.</div>
   <div class="links">
-    <a href="https://duberymnl.com" target="_blank">DuberyMNL</a>
-    <a href="https://ra-dashboard-lake.vercel.app" target="_blank">Life Dashboard</a>
-    <a href="simulator/" target="_blank">AI Simulator</a>
+    <a>DuberyMNL</a>
+    <a>Life Dashboard</a>
+    <a>AI Simulator</a>
+    <a>Cinematic Site</a>
   </div>
-  <div class="meta">Manila, Philippines | 8PM-5AM PHT = 8AM-5PM EST | sarinasmedia@gmail.com</div>
+  <div class="meta">Manila, Philippines | 8PM-5PM PHT = 8AM-5PM EST | sarinasmedia@gmail.com</div>
 </div>
 
+<!-- STORY -->
 <div class="section">
   <div class="section-title">Why Agentic Workflows</div>
   <div class="story-grid">
@@ -106,9 +106,10 @@ footer a{color:#e63946;text-decoration:none}
   </div>
 </div>
 
+<!-- WHAT I SHIPPED -->
 <div class="section">
   <div class="section-title">What I Shipped</div>
-  <div class="section-sub">A complete content-to-revenue pipeline for DuberyMNL, a sunglasses brand. Every piece built from scratch.</div>
+  <div class="section-sub">A complete content-to-revenue pipeline for DuberyMNL, a sunglasses brand. Every piece built from scratch -- captions, images, ads, landing pages, chatbot.</div>
   <div class="pipeline">
     <span class="pipe-step">Caption Gen</span><span class="pipe-arrow">&#9654;</span>
     <span class="pipe-step">Prompt Writer</span><span class="pipe-arrow">&#9654;</span>
@@ -118,16 +119,90 @@ footer a{color:#e63946;text-decoration:none}
     <span class="pipe-step">CRM</span>
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0">
-    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Order this morning, wear it by afternoon. Same-day Metro Manila delivery. COD.</div><img class="fb-img" src="assets/ads/dubery_6.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
-    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">One pair for P699. Dalawang pairs for P1,200. Regaluhan mo na rin ang truepa mo.</div><img class="fb-img" src="assets/ads/dubery_17.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
-    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Tatlong colors. Isang price. Lahat polarized. Dubery Outback Series.</div><img class="fb-img" src="assets/ads/dubery_28.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
-    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Nakaabot ka sa peak. Pero papikit-pikit ka pa rin. Dubery polarized.</div><img class="fb-img" src="assets/ads/dubery_20260318-001.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
-    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">POV: You're somewhere beautiful in the Philippines and your eyes aren't dying.</div><img class="fb-img" src="assets/ads/dubery_20260318-019.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
-    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Weekend mode: activated. Shades: on. Destination: anywhere but the office.</div><img class="fb-img" src="assets/ads/dubery_20260320-016.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
+    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Fresh cut. Clean fit. Bagay na bagay.</div><img class="fb-img" src="assets/ads/dubery_11.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
+    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">The fit just hit. Dubery Polarized.</div><img class="fb-img" src="assets/ads/dubery_12.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
+    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Nakaabot ka sa peak. Pero papikit-pikit ka pa rin?</div><img class="fb-img" src="assets/ads/dubery_20260318-001.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
+    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Weekend mode: activated. Shades: on.</div><img class="fb-img" src="assets/ads/dubery_20260320-016.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
+    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">Two flavors. One crew. Rasta Series.</div><img class="fb-img" src="assets/ads/dubery_17.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
+    <div class="fb-post"><div class="fb-header"><div class="fb-avatar">D</div><div><div class="fb-name">DuberyMNL</div><div class="fb-meta">Sponsored</div></div></div><div class="fb-caption">See the Philippines clearly. Polarized lenses.</div><img class="fb-img" src="assets/ads/dubery_20260318-019.jpg"><div class="fb-actions"><span class="fb-action">&#128077; Like</span><span class="fb-action">&#128172; Comment</span><span class="fb-action">&#8617; Share</span></div></div>
   </div>
-  <p style="text-align:center;font-size:11px;color:#9ca3af;margin-top:8px">AI-generated ad creatives running live on Meta. Built from phone photos and stock images -- no studio, no photographer.</p>
+  <p style="text-align:center;font-size:11px;color:#9ca3af;margin-top:4px">AI-generated ad creatives running live on Meta Ads. Built from phone photos -- no studio, no photographer, no designer.</p>
 </div>
 
+<!-- AI CONTENT GENERATION -->
+<div class="section">
+  <div class="section-title">AI-Generated Brand Content</div>
+  <div class="section-sub">Brand awareness content generated using Vertex AI (Gemini 3.1 Flash) with product reference photos. Multiple content formats -- bold statements, feature callouts, collection showcases, product photography.</div>
+
+  <div class="content-grid">
+    <div class="content-card"><img src="assets/brand/bold-see-clear.png"><div class="tag">BOLD STATEMENT</div></div>
+    <div class="content-card"><img src="assets/brand/callout-features.png"><div class="tag">FEATURE CALLOUT</div></div>
+    <div class="content-card"><img src="assets/brand/bold-style-protects.png"><div class="tag">BOLD STATEMENT</div></div>
+    <div class="content-card"><img src="assets/brand/collection-outback.png"><div class="tag">COLLECTION</div></div>
+    <div class="content-card"><img src="assets/brand/collection-rasta-unbox.png"><div class="tag">UNBOXING</div></div>
+    <div class="content-card"><img src="assets/ads/dubery_10.jpg"><div class="tag">PRODUCT DISPLAY</div></div>
+  </div>
+
+  <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:24px 0 8px;text-align:center">AI Product Photography</h3>
+  <p style="text-align:center;font-size:12px;color:#6b7280;margin-bottom:12px">Product shots generated from phone photos using Vertex AI. Dark slate aesthetic, consistent lighting, full unboxing layout.</p>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="content-card"><img src="assets/slate/bandits-green.png"><div class="tag">BANDITS GREEN</div></div>
+    <div class="content-card"><img src="assets/slate/bandits-glossy-black.png"><div class="tag">BANDITS BLACK</div></div>
+    <div class="content-card"><img src="assets/slate/outback-blue.png"><div class="tag">OUTBACK BLUE</div></div>
+    <div class="content-card"><img src="assets/slate/rasta-red.png"><div class="tag">RASTA RED</div></div>
+  </div>
+  <p style="text-align:center;font-size:11px;color:#9ca3af;margin-top:8px">All images generated via Google Cloud Vertex AI -- Gemini 3.1 Flash with multi-angle product reference input. No Photoshop, no stock photos.</p>
+</div>
+
+<!-- AUTOMATION WORKFLOWS -->
+<div class="section">
+  <div class="section-title">Automation Workflows</div>
+  <div class="section-sub">Production workflows built on Make.com. Interactive simulators below -- click through each step to see the full automation flow.</div>
+
+  <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin-bottom:4px">Smart Lead Router with AI Classification</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:8px">Google Form intake, AI classification, conditional routing to Google Sheets by lead type. Built on Make.com.</p>
+  <div class="browser">
+    <div class="browser-bar"><div class="browser-dot" style="background:#ff5f56"></div><div class="browser-dot" style="background:#ffbd2e"></div><div class="browser-dot" style="background:#27c93f"></div><div class="browser-url">Make.com -- Lead Router</div></div>
+    <img src="assets/make-lead-router.png" alt="Lead Router" style="width:100%;display:block">
+  </div>
+
+  <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:24px 0 4px">AI Client Engagement Pipeline</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:8px">AI-powered email response system. Classifies client intent, drafts personalized follow-ups, routes to CRM. Built on Make.com.</p>
+  <div class="browser">
+    <div class="browser-bar"><div class="browser-dot" style="background:#ff5f56"></div><div class="browser-dot" style="background:#ffbd2e"></div><div class="browser-dot" style="background:#27c93f"></div><div class="browser-url">Make.com -- Client Engagement Pipeline</div></div>
+    <img src="assets/make-engagement-pipeline.png" alt="Engagement Pipeline" style="width:100%;display:block">
+  </div>
+</div>
+
+<!-- TOOLS & SYSTEMS -->
+<div class="section">
+  <div class="section-title">Tools & Systems Built</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0">
+    <div class="info-card" style="text-align:center;padding:24px 16px">
+      <div style="font-size:36px;margin-bottom:10px">&#129302;</div>
+      <h3>Knowledge Base Chatbot</h3>
+      <p>Internal chatbot for case processors at work. Flask backend, Claude AI via CLI, 20+ indexed encyclopedia files covering 50 US states. Keyword-indexed retrieval with session memory. Screenshot upload for CMS case analysis.</p>
+    </div>
+    <div class="info-card" style="text-align:center;padding:24px 16px">
+      <div style="font-size:36px;margin-bottom:10px">&#127916;</div>
+      <h3>Cinematic Scroll Website</h3>
+      <p>Scroll-driven animated product showcase. 144 WebP frames rendered on canvas, GSAP-powered parallax, layered text choreography. Built from AI-generated video frames. <a href="https://rasta-scroll-test.vercel.app" target="_blank" style="color:#e63946;font-weight:600">View live &#8594;</a></p>
+    </div>
+    <div class="info-card" style="text-align:center;padding:24px 16px">
+      <div style="font-size:36px;margin-bottom:10px">&#9729;&#65039;</div>
+      <h3>Vertex AI Image & Video</h3>
+      <p>Google Cloud Vertex AI integration for image generation (Gemini 3.1 Flash) and video generation (Veo 3.1). ADC authentication, multi-reference input, automated prompt pipeline. All brand content above was generated through this system.</p>
+    </div>
+    <div class="info-card" style="text-align:center;padding:24px 16px">
+      <div style="font-size:36px;margin-bottom:10px">&#128172;</div>
+      <h3>Messenger Chatbot</h3>
+      <p>DuberyMNL customer engagement bot. Comment-triggered DM automation, product inquiry handling, order-taking flow with COD confirmation. Designed for the Filipino "magkano?" buying culture.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DYNAMIC LANDING PAGES -->
 <div class="section">
   <div class="section-title">Dynamic Landing Pages</div>
   <div class="section-sub">Each ad links to a personalized landing page -- dynamically loaded based on the creative. Pick an ad to preview.</div>
@@ -152,21 +227,22 @@ footer a{color:#e63946;text-decoration:none}
   <p style="text-align:center;margin-top:8px"><a href="https://duberymnl.com" target="_blank" style="color:#e63946;font-size:12px;font-weight:600;text-decoration:none">Open duberymnl.com &#8594;</a></p>
 </div>
 
+<!-- LIVE PROJECTS -->
 <div class="section">
   <div class="section-title">Live Projects</div>
 
   <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin-bottom:4px">DuberyMNL Command Center</h3>
-  <p style="font-size:13px;color:#6b7280;margin-bottom:8px">One dashboard to run the entire business. Generate ad creatives, review and approve images, stage Meta Ads, schedule organic posts, track campaign performance, and manage customer orders -- all from one clean interface. No switching between tools. No terminal needed. Just click and ship.</p>
+  <p style="font-size:13px;color:#6b7280;margin-bottom:8px">One dashboard to run the entire business. Generate ad creatives, review and approve images, stage Meta Ads, schedule organic posts, track campaign performance, and manage customer orders -- all from one interface.</p>
   <div class="browser">
     <div class="browser-bar"><div class="browser-dot" style="background:#ff5f56"></div><div class="browser-dot" style="background:#ffbd2e"></div><div class="browser-dot" style="background:#27c93f"></div><div class="browser-url">DuberyMNL Command Center</div></div>
-    <img src="assets/ss_dashboard.png" alt="Dashboard">
+    <img src="assets/ss_dashboard.png" alt="Dashboard" style="width:100%;display:block">
   </div>
 
   <h3 style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin:24px 0 4px">RAS AI Simulator</h3>
-  <p style="font-size:13px;color:#6b7280;margin-bottom:8px">Interactive demo of the full content + CRM pipeline. Watch each agent step animate with real data flow. <a href="simulator/" target="_blank" style="color:#e63946;font-weight:600">Open fullscreen &#8594;</a></p>
+  <p style="font-size:13px;color:#6b7280;margin-bottom:8px">Interactive demo of the full content + CRM pipeline. Watch each agent step animate with real data flow. <a href="simulator/index.html" target="_blank" style="color:#e63946;font-weight:600">Open fullscreen &#8594;</a></p>
   <div class="browser">
     <div class="browser-bar"><div class="browser-dot" style="background:#ff5f56"></div><div class="browser-dot" style="background:#ffbd2e"></div><div class="browser-dot" style="background:#27c93f"></div><div class="browser-url">RAS AI Solutions -- Full Funnel Orchestrator</div></div>
-    <iframe src="simulator/" style="width:100%;height:600px;border:none"></iframe>
+    <iframe src="simulator/index.html" style="width:100%;height:600px;border:none"></iframe>
   </div>
 
   <h3 style="font-family:'Caveat',cursive;font-size:22px;margin:24px 0 12px;text-align:center">Personal Projects</h3>
@@ -184,7 +260,7 @@ footer a{color:#e63946;text-decoration:none}
     <div class="info-card" style="text-align:center;padding:24px 16px">
       <div style="font-size:36px;margin-bottom:10px">&#128276;</div>
       <h3>Scheduled Alerts</h3>
-      <p>Real-time project monitoring via Telegram. Pipeline status updates, ad performance reports, deployment confirmations, save reminders. GitHub Actions cron for scheduling. Always watching, always reporting.</p>
+      <p>Real-time project monitoring via Telegram. Pipeline status updates, ad performance reports, deployment confirmations. GitHub Actions cron for scheduling. Always watching, always reporting.</p>
     </div>
     <div class="info-card" style="text-align:center;padding:24px 16px">
       <div style="font-size:36px;margin-bottom:10px">&#9749;</div>
@@ -194,17 +270,38 @@ footer a{color:#e63946;text-decoration:none}
   </div>
 </div>
 
+<!-- TECHNICAL STACK -->
 <div class="section">
   <div class="section-title">Technical Stack</div>
   <div class="tech-wrap">
-    <span class="tech-tag">n8n (Self-hosted)</span><span class="tech-tag">Claude / Anthropic</span><span class="tech-tag">OpenAI</span><span class="tech-tag">Python</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Meta Graph API</span><span class="tech-tag">Google APIs</span><span class="tech-tag">Telegram Bot API</span><span class="tech-tag">REST / Webhooks</span><span class="tech-tag">Docker / WSL2</span><span class="tech-tag">Vercel</span><span class="tech-tag">GitHub Actions</span><span class="tech-tag">FastAPI</span><span class="tech-tag">HITL Pipelines</span><span class="tech-tag">Gemini</span><span class="tech-tag">Nano Banana 2 (kie.ai)</span><span class="tech-tag">Playwright</span>
+    <span class="tech-tag highlight">Make.com</span>
+    <span class="tech-tag highlight">Claude / Anthropic</span>
+    <span class="tech-tag highlight">Google Cloud / Vertex AI</span>
+    <span class="tech-tag highlight">Python</span>
+    <span class="tech-tag">n8n</span>
+    <span class="tech-tag">Zapier</span>
+    <span class="tech-tag">Gemini 3.1 Flash</span>
+    <span class="tech-tag">Veo 3.1 (Video Gen)</span>
+    <span class="tech-tag">Meta Graph API</span>
+    <span class="tech-tag">Google APIs (Sheets, Drive, Gmail, Calendar)</span>
+    <span class="tech-tag">Claude Code</span>
+    <span class="tech-tag">JavaScript</span>
+    <span class="tech-tag">REST / Webhooks</span>
+    <span class="tech-tag">FastAPI / Flask</span>
+    <span class="tech-tag">Telegram Bot API</span>
+    <span class="tech-tag">Vercel</span>
+    <span class="tech-tag">GitHub Actions</span>
+    <span class="tech-tag">HITL Pipelines</span>
+    <span class="tech-tag">GSAP / Canvas Animation</span>
+    <span class="tech-tag">gcloud CLI</span>
   </div>
 </div>
 
+<!-- BACKGROUND -->
 <div class="section">
   <div class="section-title">Background</div>
   <div class="bg-grid">
-    <div class="info-card"><h3>Informdata (Current)</h3><p>Criminal Data Processor. Quality checker in human-in-the-loop pipeline after automation collects court data. Built Copilot-based AI agents at work and shared with teammates.</p></div>
+    <div class="info-card"><h3>Informdata (Current)</h3><p>Criminal Data Processor. Quality checker in human-in-the-loop pipeline after automation collects court data. Built AI-powered knowledge base chatbot and Copilot agents for the team.</p></div>
     <div class="info-card"><h3>TDCX / Google BPO</h3><p>Leads Qualification Specialist. Reviewed 200+ websites daily for lead validity, TOS compliance, and business verification. Deep top-of-funnel experience now applied to AI automation.</p></div>
   </div>
 </div>
@@ -219,13 +316,13 @@ footer a{color:#e63946;text-decoration:none}
   <img id="lb-img" style="max-width:90%;max-height:90%;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.3)">
 </div>
 <script>
-document.querySelectorAll('.story-card img').forEach(img=>{
+document.querySelectorAll('.story-card img, .content-card img').forEach(img=>{
+  img.style.cursor='pointer';
   img.addEventListener('click',()=>{
     document.getElementById('lb-img').src=img.src;
     document.getElementById('lightbox').style.display='flex';
   });
 });
-
 </script>
 </body>
 </html>

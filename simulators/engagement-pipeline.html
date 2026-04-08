@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Client Engagement Pipeline -- RAS AI Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--card:#141414;--card-el:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5a623;--accent2:#e8912d;--consulting:#f5a623;--automation:#3b9eff;--fallback:#888;--green:#4caf50;--surface:#1e1e1e;--glow:rgba(245,166,35,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-system,sans-serif;min-height:100vh;overflow-x:hidden}
+.m{font-family:'JetBrains Mono',monospace}
+
+.app{max-width:700px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+
+/* PIPELINE */
+.sidebar{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:0;padding:10px 0;position:relative;z-index:10;background:var(--bg)}
+.step{display:flex;flex-direction:column;align-items:center;position:relative;transition:all .4s}
+.step-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--card);border:2px solid var(--border);transition:all .4s;opacity:.35;position:relative;z-index:2}
+.step-icon.active{opacity:1;border-color:var(--accent);box-shadow:0 0 15px var(--glow);transform:scale(1.08)}
+.step-icon.done{opacity:1;border-color:var(--green);background:rgba(76,175,80,.08)}
+.step-icon.done::after{content:'\2713';position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:var(--green);color:#fff;border-radius:50%;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.step-label{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:3px;transition:color .3s}
+.step-label.active{color:var(--accent);font-weight:600}
+.step-arrow{width:30px;height:2px;background:var(--border);margin:0 4px;position:relative;transition:background .3s;align-self:center}
+.step-arrow.active{background:var(--accent)}
+.step-arrow.done{background:var(--green)}
+.step-arrow .pulse{position:absolute;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:0}
+.step-arrow.active .pulse{animation:flowDot 1.2s ease-in-out infinite}
+@keyframes flowDot{0%{left:0;opacity:0}30%{opacity:1}100%{left:100%;opacity:0}}
+
+.main{padding:0 20px 120px;display:flex;flex-direction:column}
+
+.static-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:10px 20px 12px;border-top:1px solid var(--border);background:rgba(10,10,10,.95);backdrop-filter:blur(10px);z-index:100}
+.header{text-align:center;padding:8px 0 30px}
+.header .tag{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:6px}
+.header h1{font-size:24px;font-weight:700;letter-spacing:-1px}
+.header p{font-size:13px;color:var(--muted);margin-top:6px}
+
+.scene{display:flex;align-items:flex-start;justify-content:center;padding-top:10px;margin-bottom:0}
+.scene-inner{width:100%;max-width:700px}
+
+/* COMPONENTS */
+.agent{display:flex;flex-direction:column;align-items:center;gap:6px}
+.agent-body{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;background:var(--surface);border:2px solid var(--border);transition:all .3s}
+.agent-body.thinking{animation:think 1s ease-in-out infinite;border-color:var(--accent);box-shadow:0 0 20px var(--glow)}
+.agent-body.working{animation:work .5s ease-in-out infinite;border-color:var(--accent)}
+.agent-body.done{border-color:var(--green);background:rgba(76,175,80,.08)}
+.agent-name{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.agent-status{font-size:10px;color:var(--muted);min-height:14px;transition:all .3s}
+
+.thought{position:absolute;top:-46px;left:50%;transform:translateX(-50%);background:var(--card-el);border:1px solid var(--border);border-radius:10px;padding:6px 12px;font-size:11px;white-space:nowrap;opacity:0;transition:opacity .3s;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.thought.visible{opacity:1}
+.thought::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--border)}
+
+.workspace{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;width:100%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.workspace-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
+
+.paper{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:12px;line-height:1.5;opacity:0;transform:translateY(8px);transition:all .4s}
+.paper.visible{opacity:1;transform:translateY(0)}
+.paper .label{font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+
+.btn{padding:10px 20px;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--accent);color:#0a0a0a}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow)}
+.btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.btn-row{display:flex;gap:10px;justify-content:center;margin-top:20px}
+
+.notification{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:8px 0;display:flex;align-items:center;gap:10px;font-size:12px;opacity:0;transform:translateX(-20px);transition:all .4s;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.notification.visible{opacity:1;transform:translateX(0)}
+.notification .icon{font-size:20px}
+
+.field-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.field-row:last-child{border:none}
+.field-row .k{color:var(--muted);display:flex;align-items:center;gap:6px}
+.field-row .v{font-weight:600;text-align:right;max-width:60%}
+
+.progress-bar{width:100%;height:6px;background:var(--surface);border-radius:3px;overflow:hidden;margin:8px 0}
+.progress-bar .fill{height:100%;border-radius:3px;transition:width 1.5s ease;width:0}
+
+.path-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+
+.metrics{display:flex;justify-content:center;gap:8px;margin:8px 0}
+.metric{text-align:center;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px;min-width:60px}
+.metric .num{font-size:16px;font-weight:700;transition:transform .3s}
+.metric .label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+
+.route-card{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border-radius:10px;margin:6px 0;opacity:0;transform:translateX(30px);transition:all .5s;border-left:4px solid transparent}
+.route-card.visible{opacity:1;transform:translateX(0)}
+.route-card .emoji{font-size:28px}
+.route-card .info{flex:1}
+
+.email-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.3);opacity:0;transform:translateY(20px) scale(.95);transition:all .5s}
+.email-card.visible{opacity:1;transform:translateY(0) scale(1)}
+
+.keyword-highlight{background:rgba(245,166,35,.2);border-radius:3px;padding:1px 5px;font-weight:600;color:var(--accent)}
+.keyword-highlight.blue{background:rgba(59,158,255,.2);color:var(--automation)}
+
+.cursor-blink{display:inline-block;width:2px;height:14px;background:var(--accent);animation:blink .8s step-end infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+@keyframes think{0%,100%{transform:scale(1)}50%{transform:scale(1.06) rotate(2deg)}}
+@keyframes work{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+.animate-in{animation:fadeUp .5s ease forwards}
+
+@media(max-width:768px){
+  .sidebar{flex-direction:row;width:100%;height:auto;position:relative;padding:10px;overflow-x:auto;gap:0}
+  .step-arrow{width:20px;height:2px;margin:0 2px}
+  .step-arrow .pulse{display:none}
+  .step-label{display:none}
+  .metrics{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="tag m">Interactive Demo</div>
+    <h1>AI Client Engagement Pipeline</h1>
+    <p>Watch client inquiries flow through AI briefing, CRM logging, keyword routing, and automated email responses.</p>
+  </div>
+
+  <div class="sidebar">
+    <div class="step"><div class="step-icon active" id="si-0">&#x1F4E8;</div><div class="step-label active" id="sl-0">Webhook</div></div>
+    <div class="step-arrow" id="sa-0"><div class="pulse"></div></div>
+    <div class="step"><div class="step-icon" id="si-1">&#x1F4DD;</div><div class="step-label" id="sl-1">AI Brief</div></div>
+    <div class="step-arrow" id="sa-1"><div class="pulse"></div></div>
+    <div class="step"><div class="step-icon" id="si-2">&#x1F4CA;</div><div class="step-label" id="sl-2">CRM</div></div>
+    <div class="step-arrow" id="sa-2"><div class="pulse"></div></div>
+    <div class="step"><div class="step-icon" id="si-3">&#x1F500;</div><div class="step-label" id="sl-3">Router</div></div>
+    <div class="step-arrow" id="sa-3"><div class="pulse"></div></div>
+    <div class="step"><div class="step-icon" id="si-4">&#x2709;&#xFE0F;</div><div class="step-label" id="sl-4">Email</div></div>
+  </div>
+
+  <div class="main">
+    <div class="scene"><div class="scene-inner" id="scene"></div></div>
+  </div>
+
+  <div class="static-footer" id="footer">
+    <div class="metrics">
+      <div class="metric"><div class="num" id="m-inquiries" style="color:var(--accent)">0</div><div class="label">&#x1F4E8; Inquiries</div></div>
+      <div class="metric" style="border-left:2px solid var(--border)"><div class="num" id="m-consulting" style="color:var(--consulting)">0</div><div class="label">&#x1F3AF; Consulting</div></div>
+      <div class="metric"><div class="num" id="m-automation" style="color:var(--automation)">0</div><div class="label">&#x2699;&#xFE0F; Automation</div></div>
+      <div class="metric"><div class="num" id="m-general" style="color:var(--fallback)">0</div><div class="label">&#x1F4CB; General</div></div>
+      <div class="metric" style="border-left:2px solid var(--border)"><div class="num" id="m-emails" style="color:var(--accent)">0</div><div class="label">&#x1F4E7; Emails</div></div>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px">One webhook. AI-briefed, CRM-logged, keyword-routed, and emailed -- all in seconds.</div>
+    <div style="width:60px;height:1px;background:var(--border);margin:6px auto"></div>
+    <div style="font-size:9px;color:var(--muted);margin-top:4px">Built with <strong style="color:var(--accent)">Make.com</strong> &bull; <span class="m" id="run-counter">RUN 1/10</span> &bull; <strong style="color:var(--accent)">RAS AI Solutions</strong></div>
+  </div>
+</div>
+
+<script>
+const scene=document.getElementById('scene');
+function wait(ms){return new Promise(r=>setTimeout(r,ms))}
+
+function setStep(idx){
+  for(let i=0;i<5;i++){
+    const icon=document.getElementById('si-'+i);
+    const label=document.getElementById('sl-'+i);
+    const arrow=document.getElementById('sa-'+i);
+    if(icon)icon.className='step-icon'+(i<idx?' done':i===idx?' active':'');
+    if(label)label.className='step-label'+(i===idx?' active':'');
+    if(arrow)arrow.className='step-arrow'+(i<idx?' done':i===idx?' active':'');
+  }
+}
+
+async function typeText(el,text,speed=40){
+  el.innerHTML='';
+  for(let i=0;i<text.length;i++){
+    el.innerHTML=text.substring(0,i+1)+'<span class="cursor-blink"></span>';
+    await wait(speed);
+  }
+  el.textContent=text;
+}
+
+let metrics={inquiries:0,consulting:0,automation:0,general:0,emails:0};
+function updateMetric(key){
+  metrics[key]++;
+  const el=document.getElementById('m-'+key);
+  if(el){el.textContent=metrics[key];el.style.transform='scale(1.3)';setTimeout(()=>el.style.transition='transform .3s',0);setTimeout(()=>el.style.transform='scale(1)',300)}
+}
+
+function highlightKeywords(msg,keywords,cssClass){
+  let html=msg;
+  keywords.forEach(kw=>{
+    const re=new RegExp('('+kw+')','gi');
+    html=html.replace(re,'<span class="keyword-highlight'+cssClass+'">$1</span>');
+  });
+  return html;
+}
+
+const inquiries=[
+  {
+    name:'Maria Concepcion Santos',email:'maria@santosholdings.ph',company:'Santos Holdings Inc.',
+    msg:'We need strategic advisory for our expansion into ASEAN markets. Looking for a consulting partner to guide our digital transformation roadmap for 2026-2027.',
+    path:'consulting',keywords:['strategic','advisory','consulting'],serviceType:'Strategic Consulting',
+    brief:'Santos Holdings is seeking strategic consulting for international expansion. The client needs a digital transformation roadmap spanning ASEAN markets over a two-year horizon. High-value enterprise engagement.',
+    proposal:'Thank you for reaching out, Maria. We\'d like to propose a phased consulting engagement covering market analysis, digital maturity assessment, and a tailored ASEAN expansion roadmap. Our team specializes in guiding enterprises through complex digital transformations, and we can deliver an initial strategy framework within 4-6 weeks.',
+    thought:'Enterprise consulting request detected'
+  },
+  {
+    name:'Dennis Tan',email:'dennis@tanlogistics.ph',company:'Tan Logistics Corp',
+    msg:'We need workflow automation for our order processing. Currently everything is manual and it takes 3 days to process a single shipment.',
+    path:'automation',keywords:['workflow','automation'],serviceType:'Automation Solutions',
+    brief:'Tan Logistics needs to automate their manual order processing pipeline. Current turnaround is 3 days per shipment, indicating significant efficiency gains possible. Operations-critical automation request.',
+    proposal:'Dennis, we understand the urgency of streamlining your order processing. We propose building an end-to-end automation workflow that captures orders, validates shipment details, triggers fulfillment, and updates tracking -- reducing processing from days to minutes. Working prototype within two weeks.',
+    thought:'Multi-tool integration needed'
+  },
+  {
+    name:'Jun Bautista',email:'jun.bautista@gmail.com',company:'Freelancer',
+    msg:'Hi, I saw your page and I\'m interested in your services. Can you send me more information about what you offer and pricing?',
+    path:'fallback',keywords:[],serviceType:'General Inquiry',
+    brief:'General information request from an individual prospect. The client is in early discovery phase and has not specified a particular service need. Follow-up should provide a service overview.',
+    proposal:null,
+    thought:'Early-stage inquiry, needs nurturing'
+  },
+  {
+    name:'Roberto Villanueva',email:'roberto@villanueva-group.ph',company:'Villanueva Group',
+    msg:'Our board has approved budget for a consulting engagement to review our operations and recommend process improvements across our 12 branches.',
+    path:'consulting',keywords:['consulting'],serviceType:'Strategic Consulting',
+    brief:'Villanueva Group seeks operational consulting for multi-branch optimization. Board-level budget approval secured. Decision-making authority confirmed for 12-location engagement.',
+    proposal:'Hi Roberto, we appreciate the Villanueva Group\'s interest. We propose a comprehensive operational audit across your 12 branches, followed by a prioritized improvement roadmap with estimated ROI per initiative. Our approach combines on-site assessments with data-driven benchmarking to identify the highest-impact opportunities.',
+    thought:'Board-approved budget -- high priority'
+  },
+  {
+    name:'Patricia Lim',email:'patricia@limbeauty.ph',company:'Lim Beauty Co.',
+    msg:'We want to set up integration between our Shopify store, inventory system, and social media. Need everything connected and automated.',
+    path:'automation',keywords:['integration','automated'],serviceType:'Automation Solutions',
+    brief:'Lim Beauty Co. requires multi-platform integration connecting e-commerce, inventory management, and social media channels. The client wants a unified automated system across Shopify and related tools.',
+    proposal:'Hi Patricia, we\'d love to help connect your business tools. Our proposal covers full integration between Shopify, your inventory system, and social media -- with real-time stock sync, automated posting for new products, and order notifications across platforms. Implementation typically takes 2-3 weeks.',
+    thought:'Standard integration project'
+  },
+  {
+    name:'Rosario Aquino',email:'rosario@aquino-dental.ph',company:'Aquino Dental Clinic',
+    msg:'Good day! We\'re a small dental clinic exploring options to improve our online presence. Not sure exactly what we need yet but would appreciate any guidance.',
+    path:'fallback',keywords:[],serviceType:'General Inquiry',
+    brief:'Aquino Dental Clinic is exploring digital improvement options but hasn\'t identified specific needs. Early-stage prospect requiring discovery consultation. The client appears open to guidance.',
+    proposal:null,
+    thought:'Exploratory -- needs discovery call'
+  },
+  {
+    name:'Angela Reyes-Cruz',email:'angela@reyescruz-advisory.ph',company:'Reyes-Cruz Advisory',
+    msg:'Looking for a strategy partner to help us build an AI adoption framework for our advisory practice. We want to stay ahead of industry changes.',
+    path:'consulting',keywords:['strategy','advisory'],serviceType:'Strategic Consulting',
+    brief:'Reyes-Cruz Advisory wants to develop an AI adoption framework for their professional services firm. Proactively seeking competitive advantage through technology strategy. Consulting-to-consulting engagement.',
+    proposal:'Angela, thank you for your forward-thinking approach. We\'d like to propose developing a customized AI adoption framework tailored to professional advisory firms -- including an AI readiness assessment, use-case prioritization matrix, and a phased implementation plan with clear milestones and change management guidance.',
+    thought:'AI strategy for advisory firm'
+  },
+  {
+    name:'Carlos Mendoza',email:'carlos@mendoza-mfg.ph',company:'Mendoza Manufacturing',
+    msg:'Our production reporting is a mess. Need a workflow that automatically pulls data from our machines, generates daily reports, and emails them to management.',
+    path:'automation',keywords:['workflow','automatically'],serviceType:'Automation Solutions',
+    brief:'Mendoza Manufacturing needs automated production reporting. Machine data collection, report generation, and email distribution on a daily schedule. Data pipeline automation project.',
+    proposal:'Carlos, we can eliminate the manual reporting burden entirely. We propose an automated daily pipeline that pulls production data from your machine systems, aggregates it into a formatted report with key metrics and anomaly flags, and delivers it to management every morning. Built with error handling and retry logic.',
+    thought:'Daily reporting pipeline needed'
+  },
+  {
+    name:'Mark Anthony Dela Cruz',email:'markanthony.dc@yahoo.com',company:'Individual',
+    msg:'Kamusta po, interested po ako sa mga services nyo. Pwede po ba mag-inquire about your rates? Salamat po.',
+    path:'fallback',keywords:[],serviceType:'General Inquiry',
+    brief:'Filipino-language inquiry requesting service rates and general information. The prospect is polite and interested but has not specified a particular service category. Standard follow-up with pricing guide recommended.',
+    proposal:null,
+    thought:'Rate inquiry -- send service overview'
+  },
+  {
+    name:'Beatrice Ong',email:'beatrice@ong-realty.ph',company:'Ong Realty Group',
+    msg:'Hello, our company is looking into different technology solutions for next year. We\'re still in the research phase and comparing providers.',
+    path:'fallback',keywords:[],serviceType:'General Inquiry',
+    brief:'Ong Realty Group is in research phase comparing technology solution providers. Not yet committed to a specific service type. Nurture-track engagement recommended.',
+    proposal:null,
+    thought:'Research phase -- nurture track'
+  }
+];
+
+const pathMeta={
+  consulting:{emoji:'\u{1F3AF}',color:'var(--consulting)',label:'CONSULTING',bg:'rgba(245,166,35,.1)'},
+  automation:{emoji:'\u{2699}\u{FE0F}',color:'var(--automation)',label:'AUTOMATION',bg:'rgba(59,158,255,.1)'},
+  fallback:{emoji:'\u{1F4CB}',color:'var(--fallback)',label:'GENERAL',bg:'rgba(136,136,136,.1)'}
+};
+
+const thankYouTemplate=name=>`Hi ${name}, thank you for reaching out to RAS AI Solutions! We've received your inquiry and a member of our team will review it shortly.\n\nHere's a quick overview of our services:\n\u2022 Strategic Consulting -- AI strategy, digital transformation, operational optimization\n\u2022 Automation Solutions -- Workflow automation, system integration, data pipelines\n\nWe'll follow up within 24 hours with more details tailored to your needs. Maraming salamat!`;
+
+async function runScenario(){
+  for(let run=0;run<10;run++){
+    const inq=inquiries[run];
+    const pm=pathMeta[inq.path];
+    const kwClass=inq.path==='automation'?' blue':'';
+    document.getElementById('run-counter').textContent='RUN '+(run+1)+' / 10';
+
+    // === STAGE 1: WEBHOOK ===
+    setStep(0);
+    updateMetric('inquiries');
+    scene.innerHTML=`
+      <div class="animate-in">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:24px">&#x1F4E8;</span>
+          <span style="font-size:14px;font-weight:600;color:var(--accent)">INCOMING WEBHOOK</span>
+        </div>
+        <div class="m" style="font-size:10px;color:var(--muted);margin-bottom:14px;padding:4px 8px;background:var(--surface);border-radius:6px;display:inline-block">POST /fct85yxs...djox</div>
+        <div class="workspace">
+          <div class="field-row"><span class="k">&#x1F464; Name</span><span class="v" id="f-name"></span></div>
+          <div class="field-row"><span class="k">&#x1F4E7; Email</span><span class="v" id="f-email" style="font-size:11px"></span></div>
+          <div class="field-row"><span class="k">&#x1F3E2; Company</span><span class="v" id="f-company"></span></div>
+          <div class="field-row" style="border:none"><span class="k">&#x1F4AC; Message</span><span class="v" id="f-msg" style="font-size:11px;max-width:55%"></span></div>
+        </div>
+      </div>`;
+    await typeText(document.getElementById('f-name'),inq.name,50);
+    await typeText(document.getElementById('f-email'),inq.email,35);
+    await typeText(document.getElementById('f-company'),inq.company,40);
+    await typeText(document.getElementById('f-msg'),inq.msg,20);
+    await wait(1200);
+
+    // === STAGE 2: AI BRIEF ===
+    setStep(1);
+    scene.innerHTML=`
+      <div class="animate-in" style="text-align:center">
+        <div class="agent" style="position:relative">
+          <div class="thought" id="ai-thought">Reading client message...</div>
+          <div class="agent-body thinking" id="ai-body">&#x1F916;</div>
+          <div class="agent-name" style="color:var(--accent)">AI</div>
+          <div class="agent-status" id="ai-status">Generating brief...</div>
+        </div>
+        <div class="workspace" style="max-width:500px;margin:16px auto;text-align:left">
+          <div class="workspace-label m">AI Brief</div>
+          <div class="paper" id="ai-input"><div class="label">Input</div>"${inq.msg.substring(0,60)}..."</div>
+          <div class="progress-bar"><div class="fill" id="ai-bar" style="background:var(--accent)"></div></div>
+          <div class="paper" id="ai-result"><div class="label" style="color:${pm.color}">Summary</div><span id="ai-brief-text"></span></div>
+        </div>
+      </div>`;
+    await wait(600);document.getElementById('ai-thought').classList.add('visible');
+    await wait(600);document.getElementById('ai-input').classList.add('visible');
+    await wait(400);document.getElementById('ai-bar').style.width='100%';
+    await wait(2000);
+    document.getElementById('ai-body').className='agent-body done';
+    document.getElementById('ai-status').textContent='Brief complete';
+    document.getElementById('ai-status').style.color=pm.color;
+    document.getElementById('ai-thought').textContent=inq.thought;
+    document.getElementById('ai-result').classList.add('visible');
+    await typeText(document.getElementById('ai-brief-text'),inq.brief,18);
+    await wait(1500);
+
+    // === STAGE 3: CRM ===
+    setStep(2);
+    const ts=new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
+    scene.innerHTML=`
+      <div class="animate-in">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+          <span style="font-size:24px">&#x1F4CA;</span>
+          <span style="font-size:14px;font-weight:600;color:var(--green)">CLIENT ENGAGEMENT CRM</span>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label m">Google Sheets</div>
+          <div style="background:var(--surface);border-radius:8px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:1fr 2fr 1.2fr 1fr;padding:8px 12px;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border)" class="m">
+              <span>Time</span><span>Client</span><span>Service</span><span>Status</span>
+            </div>
+            <div id="sheet-rows"></div>
+          </div>
+        </div>
+        <div class="notification" id="sheet-notif" style="border-color:var(--green)">
+          <div class="icon">&#x2713;</div>
+          <div style="flex:1">Row added to Client Engagement CRM</div>
+          <div class="m" style="font-size:9px;color:var(--green)">DONE</div>
+        </div>
+      </div>`;
+    await wait(800);
+    const sheetRow=document.getElementById('sheet-rows');
+    const row=document.createElement('div');
+    row.style.cssText='display:grid;grid-template-columns:1fr 2fr 1.2fr 1fr;padding:10px 12px;font-size:12px;opacity:0;transform:translateX(20px);transition:all .5s;background:'+pm.bg;
+    row.innerHTML=`<span class="m" style="font-size:10px;color:var(--muted)">${ts}</span><span style="font-weight:600">${inq.name}</span><span><span class="path-tag" style="background:${pm.bg};color:${pm.color}">${pm.emoji} ${pm.label}</span></span><span style="font-size:10px;color:var(--muted)">Email Pending</span>`;
+    sheetRow.appendChild(row);
+    await wait(300);row.style.opacity='1';row.style.transform='translateX(0)';
+    await wait(800);
+    document.getElementById('sheet-notif').classList.add('visible');
+    await wait(1800);
+
+    // === STAGE 4: ROUTER ===
+    setStep(3);
+    const hasKeywords=inq.keywords.length>0;
+    const highlightedMsg=hasKeywords?highlightKeywords(inq.msg,inq.keywords,kwClass):inq.msg;
+    scene.innerHTML=`
+      <div class="animate-in">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+          <span style="font-size:24px">&#x1F500;</span>
+          <span style="font-size:14px;font-weight:600">KEYWORD ROUTER</span>
+          <span class="path-tag" style="background:${pm.bg};color:${pm.color};margin-left:8px">${pm.emoji} ${pm.label}</span>
+        </div>
+        <div class="workspace" style="margin-bottom:12px">
+          <div class="workspace-label m">Message Scan</div>
+          <div style="font-size:12px;line-height:1.8;color:var(--muted)">${highlightedMsg}</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">
+          ${hasKeywords?'Matched keywords: '+inq.keywords.map(k=>'<span class="path-tag" style="background:'+pm.bg+';color:'+pm.color+'">'+k+'</span>').join(' '):'<span style="color:var(--fallback)">No keywords matched -- routing to general response</span>'}
+        </div>
+        <div id="route-actions" style="margin-top:8px"></div>
+      </div>`;
+    await wait(1000);
+    const routeBox=document.getElementById('route-actions');
+    if(inq.path!=='fallback'){
+      let n1=document.createElement('div');n1.className='notification';
+      n1.innerHTML=`<div class="icon">&#x1F916;</div><div style="flex:1">Generate ${inq.path} proposal</div><div class="m" style="font-size:9px;color:${pm.color}">PENDING</div>`;
+      routeBox.appendChild(n1);await wait(200);n1.classList.add('visible');
+      await wait(800);
+    }
+    let n2=document.createElement('div');n2.className='notification';
+    n2.innerHTML=`<div class="icon">&#x2709;&#xFE0F;</div><div style="flex:1">${inq.path==='fallback'?'Send thank-you email':'Send proposal email'}</div><div class="m" style="font-size:9px;color:${pm.color}">PENDING</div>`;
+    routeBox.appendChild(n2);await wait(200);n2.classList.add('visible');
+    updateMetric(inq.path==='fallback'?'general':inq.path);
+    await wait(1800);
+
+    // === STAGE 5: EMAIL ===
+    setStep(4);
+
+    if(inq.path!=='fallback'){
+      // Sub-phase A: AI proposal generation
+      scene.innerHTML=`
+        <div class="animate-in" style="text-align:center">
+          <div class="agent" style="position:relative">
+            <div class="thought visible" id="prop-thought">Generating ${inq.path} proposal...</div>
+            <div class="agent-body working" id="prop-body">&#x1F916;</div>
+            <div class="agent-name" style="color:${pm.color}">AI</div>
+            <div class="agent-status">Writing proposal...</div>
+          </div>
+          <div class="workspace" style="max-width:500px;margin:16px auto;text-align:left">
+            <div class="workspace-label m">Proposal Draft</div>
+            <div class="progress-bar"><div class="fill" id="prop-bar" style="background:${pm.color}"></div></div>
+            <div class="paper visible" style="border-color:${pm.color}"><span id="prop-text"></span></div>
+          </div>
+        </div>`;
+      document.getElementById('prop-bar').style.width='100%';
+      await typeText(document.getElementById('prop-text'),inq.proposal,18);
+      document.getElementById('prop-body').className='agent-body done';
+      document.getElementById('prop-thought').textContent='Proposal ready';
+      await wait(1500);
+
+      // Sub-phase B: email card
+      const subjectType=inq.path==='consulting'?'Consulting':'Automation';
+      scene.innerHTML=`
+        <div class="animate-in">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+            <span style="font-size:24px">&#x2709;&#xFE0F;</span>
+            <span style="font-size:14px;font-weight:600;color:${pm.color}">GMAIL -- PROPOSAL SENT</span>
+          </div>
+          <div class="email-card" id="email-card" style="border-color:${pm.color}">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <span class="path-tag" style="background:${pm.bg};color:${pm.color}">${pm.emoji} ${pm.label} PROPOSAL</span>
+              <div style="margin-left:auto;font-size:10px;color:var(--muted)">Just now</div>
+            </div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">To: ${inq.email}</div>
+            <div style="font-size:15px;font-weight:600;margin-bottom:12px">Your ${subjectType} Proposal from RAS AI Solutions</div>
+            <div style="background:var(--surface);border-radius:8px;padding:14px;font-size:12px;line-height:1.8;color:var(--muted)">
+              ${inq.proposal}
+            </div>
+            <div style="margin-top:12px;font-size:10px;color:var(--muted)">Sent via Gmail API &bull; Triggered by Make.com</div>
+          </div>
+        </div>`;
+      await wait(400);document.getElementById('email-card').classList.add('visible');
+      updateMetric('emails');
+      await wait(4500);
+    } else {
+      // Fallback: templated thank-you
+      const emailBody=thankYouTemplate(inq.name.split(' ')[0]);
+      scene.innerHTML=`
+        <div class="animate-in">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+            <span style="font-size:24px">&#x2709;&#xFE0F;</span>
+            <span style="font-size:14px;font-weight:600;color:var(--fallback)">GMAIL -- THANK YOU SENT</span>
+          </div>
+          <div class="email-card" id="email-card" style="border-color:var(--fallback)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <span class="path-tag" style="background:${pm.bg};color:${pm.color}">${pm.emoji} GENERAL INQUIRY</span>
+              <div style="margin-left:auto;font-size:10px;color:var(--muted)">Just now</div>
+            </div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">To: ${inq.email}</div>
+            <div style="font-size:15px;font-weight:600;margin-bottom:12px">Thank you for your inquiry -- RAS AI Solutions</div>
+            <div style="background:var(--surface);border-radius:8px;padding:14px;font-size:12px;line-height:1.8;color:var(--muted);white-space:pre-line">${emailBody}</div>
+            <div style="margin-top:12px;font-size:10px;color:var(--muted)">Sent via Gmail API &bull; Triggered by Make.com</div>
+          </div>
+        </div>`;
+      await wait(400);document.getElementById('email-card').classList.add('visible');
+      updateMetric('emails');
+      await wait(4000);
+    }
+
+    await wait(600);
+  }
+
+  // === COMPLETE ===
+  for(let i=0;i<5;i++){
+    const icon=document.getElementById('si-'+i);
+    const arrow=document.getElementById('sa-'+i);
+    if(icon)icon.className='step-icon done';
+    if(arrow)arrow.className='step-arrow done';
+  }
+  scene.innerHTML='<div class="animate-in" style="text-align:center;padding:40px 0"><div style="font-size:48px;margin-bottom:8px">&#x2705;</div><div style="font-size:24px;font-weight:700">All 10 Inquiries Processed</div><div style="font-size:13px;color:var(--muted);margin-top:8px">Resetting...</div></div>';
+  await wait(5000);
+  location.reload();
+}
+
+runScenario();
+</script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Lead Router Simulator -- RAS AI Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf8f5;--card:#ffffff;--border:#e8e0d4;--text:#1a1a1a;--muted:#8b8178;--accent:#c96442;--accent2:#a0522d;--hot:#c0392b;--warm:#d4890a;--cold:#2e86ab;--green:#5a8a4a;--surface:#f0ebe3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-system,sans-serif;min-height:100vh;overflow-x:hidden}
+.m{font-family:'JetBrains Mono',monospace}
+
+.sim{max-width:800px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+.header{text-align:center;padding:40px 0 12px}
+.header .tag{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:8px}
+.header h1{font-size:22px;font-weight:700;letter-spacing:-1px;color:var(--text)}
+.header p{font-size:13px;color:var(--muted);margin-top:8px}
+
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 60px}
+.scene{width:100%;max-width:650px;min-height:380px;position:relative}
+
+.conveyor{display:flex;align-items:center;gap:6px;padding:8px 0;justify-content:center;flex-wrap:wrap}
+.conveyor-item{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid var(--border);background:var(--card);transition:all .4s;opacity:.3}
+.conveyor-item.active{opacity:1;border-color:var(--accent);box-shadow:0 0 15px rgba(201,100,66,.15)}
+.conveyor-item.done{opacity:1;border-color:var(--green);background:rgba(90,138,74,.05)}
+.conveyor-arrow{color:var(--muted);font-size:12px;opacity:.3}
+
+.agent{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.agent-body{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;position:relative;transition:transform .3s;background:var(--surface)}
+.agent-body.thinking{animation:think 1s ease-in-out infinite}
+.agent-body.working{animation:work .5s ease-in-out infinite}
+.agent-body.celebrating{animation:celebrate .4s ease-in-out 3}
+.agent-name{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.agent-status{font-size:10px;color:var(--muted);min-height:14px}
+
+.thought{position:absolute;top:-50px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:11px;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.thought.visible{opacity:1}
+.thought::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-top:7px solid var(--border)}
+
+.workspace{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:16px;width:100%;min-height:120px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.workspace-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
+
+.paper{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:11px;line-height:1.5;opacity:0;transform:translateY(8px);transition:all .4s}
+.paper.visible{opacity:1;transform:translateY(0)}
+.paper .label{font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+
+.btn{padding:10px 20px;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,100,66,.25)}
+.btn-secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-row{display:flex;gap:10px;justify-content:center;margin-top:20px}
+
+.lead-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px auto;max-width:380px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.lead-card .field{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
+.lead-card .field:last-child{border:none}
+.lead-card .field .k{color:var(--muted)}
+.lead-card .field .v{font-weight:600}
+.lead-tag{display:inline-block;padding:3px 8px;border-radius:4px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+
+.notification{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:8px 0;display:flex;align-items:center;gap:10px;font-size:12px;opacity:0;transform:translateX(-20px);transition:all .4s;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+.notification.visible{opacity:1;transform:translateX(0)}
+.notification .icon{font-size:18px}
+
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin:16px 0}
+.metric{text-align:center;padding:12px;background:var(--surface);border-radius:8px;border:1px solid var(--border)}
+.metric .num{font-size:18px;font-weight:700}
+.metric .label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+.route-path{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin:8px 0;opacity:0;transform:translateX(-20px);transition:all .4s}
+.route-path.visible{opacity:1;transform:translateX(0)}
+.route-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+@keyframes think{0%,100%{transform:scale(1)}50%{transform:scale(1.05) rotate(2deg)}}
+@keyframes work{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes celebrate{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(1.1) rotate(-5deg)}75%{transform:scale(1.1) rotate(5deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeUp .5s ease forwards}
+
+.log{position:fixed;bottom:0;left:0;right:0;background:rgba(250,248,245,.95);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:10px;font-size:10px;z-index:100}
+.log .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.log .msg{color:var(--muted);flex:1}
+.log .time{color:var(--muted);font-size:9px}
+
+.final{text-align:center;padding:32px 16px}
+.final h2{font-size:26px;font-weight:700;margin-bottom:12px}
+.final p{color:var(--muted);font-size:13px;line-height:1.7;max-width:500px;margin:0 auto 20px}
+
+@media(max-width:600px){
+  .conveyor-item{width:38px;height:38px;font-size:18px;border-radius:10px}
+  .sim{padding:16px}
+  .header h1{font-size:20px}
+  .agent-body{width:64px!important;height:64px!important;font-size:32px!important}
+  .btn{padding:12px 22px;font-size:14px}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="sim">
+  <div class="header">
+    <div class="tag m">Interactive Simulation</div>
+    <h1>Smart Lead Router with AI Classification</h1>
+    <p>Watch 10 leads flow through an AI-powered routing system. Built with Make.com.</p>
+  </div>
+
+  <div class="conveyor" id="conveyor">
+    <div class="conveyor-item active" id="cv-0">📋</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-1">🧠</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-2">🔀</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-3">🔥</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-4">📊</div>
+    <div class="conveyor-arrow">&rarr;</div>
+    <div class="conveyor-item" id="cv-5">✅</div>
+  </div>
+
+  <div class="stage">
+    <div class="scene" id="scene"></div>
+  </div>
+</div>
+
+<div class="log">
+  <div class="dot" style="background:var(--green);box-shadow:0 0 6px var(--green)" id="log-dot"></div>
+  <div class="msg m" id="log-msg">Make.com scenario ready. Press start to begin.</div>
+  <div class="time m" id="log-time"></div>
+</div>
+
+<script>
+const scene=document.getElementById('scene');
+const logMsg=document.getElementById('log-msg');
+const logTime=document.getElementById('log-time');
+const logDot=document.getElementById('log-dot');
+
+const leads=[
+  {name:'Andrea Lim',email:'andrea@limgroup.ph',company:'Lim Group Holdings',budget:'P50K+',msg:'Board approved 6-figure budget for AI marketing across 5 subsidiaries.',expected:'hot'},
+  {name:'Jake Torres',email:'jake.torres99@gmail.com',company:'',budget:'Under P10K',msg:'yo just checking this out. not really sure what i need',expected:'cold'},
+  {name:'Monica Dela Rosa',email:'monica@delarosa-events.ph',company:'Dela Rosa Events',budget:'P10-50K',msg:'We organize corporate events and need consistent social media presence.',expected:'warm'},
+  {name:'Richard Chua',email:'richard@chuaenterprises.com',company:'Chua Enterprises International',budget:'P50K+',msg:'Expanding to 3 new markets. Need AI content generation. Decision maker here.',expected:'hot'},
+  {name:'Tina Manalo',email:'tina_manalo@yahoo.com',company:'Tina Bakes',budget:'Under P10K',msg:'magkano po ba? gusto ko lang mag post sa FB para sa bakery ko',expected:'cold'},
+  {name:'Daniel Park',email:'daniel@parkdigital.ph',company:'Park Digital Agency',budget:'P10-50K',msg:'Our agency handles 8 client accounts. Looking for white-label AI automation.',expected:'warm'},
+  {name:'Carmen Villafuerte',email:'carmen@villafuerte-law.ph',company:'Villafuerte Law Office',budget:'P10-50K',msg:'Need professional LinkedIn and Facebook management for our law firm.',expected:'warm'},
+  {name:'Emmanuel Rojas',email:'manny@rojasauto.ph',company:'Rojas Auto Group',budget:'P50K+',msg:'We run 15 car dealerships nationwide. Need automated social media + chatbot. Lets meet Monday.',expected:'hot'},
+  {name:'Bianca Santos',email:'bianca_s@hotmail.com',company:'',budget:'Under P10K',msg:'hi interested po ako. pang personal lang sana',expected:'cold'},
+  {name:'George Tan',email:'george@tanproperties.ph',company:'Tan Properties Corp',budget:'P10-50K',msg:'Managing 30+ rental listings. Want automated posting when new units available.',expected:'warm'},
+];
+
+let hotCount=0,warmCount=0,coldCount=0;
+
+function log(msg,color){logMsg.textContent=msg;logDot.style.background=color||'var(--green)';logDot.style.boxShadow=`0 0 6px ${color||'var(--green)'}`;logTime.textContent=new Date().toLocaleTimeString('en-US',{hour12:false})}
+function setCV(idx){for(let i=0;i<6;i++){const el=document.getElementById('cv-'+i);if(el)el.className='conveyor-item'+(i<idx?' done':i===idx?' active':'')}}
+function wait(ms){return new Promise(r=>setTimeout(r,ms))}
+function budgetIcon(b){return b==='P50K+'?'💰':b==='P10-50K'?'💵':'🪙'}
+function categoryColor(c){return c==='hot'?'var(--hot)':c==='warm'?'var(--warm)':'var(--cold)'}
+function categoryBg(c){return c==='hot'?'rgba(192,57,43,.08)':c==='warm'?'rgba(212,137,10,.08)':'rgba(46,134,171,.08)'}
+function categoryEmoji(c){return c==='hot'?'🔥':c==='warm'?'🟡':'🧊'}
+
+function showIntro(){
+  setCV(0);
+  scene.innerHTML=`
+    <div class="animate-in" style="text-align:center;padding:30px 0">
+      <div class="agent">
+        <div class="agent-body" style="font-size:44px;width:90px;height:90px;border-radius:22px;border:2px solid var(--accent)">🤖</div>
+        <div class="agent-name" style="color:var(--accent);font-size:13px;margin-top:10px">Make.com Scenario</div>
+        <div class="agent-status" style="max-width:420px;margin-top:8px;line-height:1.6;font-size:12px">10 leads are about to hit your Google Form. Watch the AI classify each one and route it to the right destination -- automatically.</div>
+      </div>
+      <div style="display:flex;gap:16px;justify-content:center;margin:20px 0">
+        <div style="text-align:center"><div style="font-size:24px">📋</div><div style="font-size:9px;color:var(--muted);margin-top:4px">FORM</div></div>
+        <div style="color:var(--muted);font-size:20px;line-height:30px">&rarr;</div>
+        <div style="text-align:center"><div style="font-size:24px">🧠</div><div style="font-size:9px;color:var(--muted);margin-top:4px">AI</div></div>
+        <div style="color:var(--muted);font-size:20px;line-height:30px">&rarr;</div>
+        <div style="text-align:center"><div style="font-size:24px">🔀</div><div style="font-size:9px;color:var(--muted);margin-top:4px">ROUTER</div></div>
+        <div style="color:var(--muted);font-size:20px;line-height:30px">&rarr;</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="font-size:14px">🔥 Hot &rarr; 📧 Email + 📊 Sheet</div>
+          <div style="font-size:14px">🟡 Warm &rarr; 📊 Sheet</div>
+          <div style="font-size:14px">🧊 Cold &rarr; 📊 Sheet</div>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="processLeads()">Run Scenario &rarr;</button></div>
+    </div>`;
+}
+
+async function processLeads(){
+  setCV(1);log('Google Forms trigger activated. Processing 10 leads...','var(--accent)');
+
+  for(let i=0;i<leads.length;i++){
+    const lead=leads[i];
+
+    // Step 1: Form submission arrives
+    setCV(0);
+    scene.innerHTML=`
+      <div class="animate-in">
+        <div style="display:flex;gap:20px;align-items:flex-start">
+          <div class="agent" style="flex-shrink:0">
+            <div class="thought visible">📋 Lead ${i+1}/10 received</div>
+            <div class="agent-body working" style="border:2px solid var(--accent)">📋</div>
+            <div class="agent-name" style="color:var(--accent)">Google Forms</div>
+            <div class="agent-status">New submission</div>
+          </div>
+          <div class="lead-card" style="flex:1;margin:0">
+            <div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Lead #${i+1}</div>
+            <div class="field"><span class="k">👤 Name</span><span class="v">${lead.name}</span></div>
+            <div class="field"><span class="k">📧 Email</span><span class="v" style="font-size:10px">${lead.email}</span></div>
+            <div class="field"><span class="k">🏢 Company</span><span class="v">${lead.company||'--'}</span></div>
+            <div class="field"><span class="k">${budgetIcon(lead.budget)} Budget</span><span class="v" style="color:${lead.budget==='P50K+'?'var(--green)':lead.budget==='P10-50K'?'var(--warm)':'var(--muted)'}">${lead.budget}</span></div>
+            <div class="field"><span class="k">💬 Message</span><span class="v" style="font-size:10px;max-width:200px;text-align:right">${lead.msg.substring(0,60)}...</span></div>
+          </div>
+        </div>
+      </div>`;
+    log(`Lead ${i+1}: ${lead.name} (${lead.budget})`,'var(--accent)');
+    await wait(1500);
+
+    // Step 2: AI Classification
+    setCV(1);
+    scene.innerHTML=`
+      <div class="animate-in" style="text-align:center">
+        <div class="agent">
+          <div class="thought visible">Analyzing budget + message intent...</div>
+          <div class="agent-body thinking" style="border:2px solid var(--accent2)">🧠</div>
+          <div class="agent-name" style="color:var(--accent2)">AI Toolkit</div>
+          <div class="agent-status" id="ai-status">Classifying ${lead.name}...</div>
+        </div>
+        <div class="workspace" style="max-width:400px;margin:16px auto">
+          <div class="workspace-label m">Classification Engine</div>
+          <div id="ai-out"></div>
+        </div>
+      </div>`;
+    log(`AI analyzing: ${lead.name}...`,'var(--accent2)');
+
+    const aiOut=document.getElementById('ai-out');
+    await wait(600);
+    let p=document.createElement('div');p.className='paper';
+    p.innerHTML=`<div class="label">Input</div><div style="color:var(--muted)">Budget: ${lead.budget} | "${lead.msg.substring(0,40)}..."</div>`;
+    aiOut.appendChild(p);await wait(80);p.classList.add('visible');
+
+    await wait(800);
+    const cat=lead.expected;
+    if(cat==='hot')hotCount++;else if(cat==='warm')warmCount++;else coldCount++;
+
+    p=document.createElement('div');p.className='paper';
+    p.innerHTML=`<div class="label" style="color:${categoryColor(cat)}">Result</div><div style="font-weight:600;color:${categoryColor(cat)}">${categoryEmoji(cat)} ${cat.toUpperCase()}</div>`;
+    aiOut.appendChild(p);await wait(80);p.classList.add('visible');
+    document.getElementById('ai-status').textContent=`Classified as ${cat.toUpperCase()}`;
+    await wait(1000);
+
+    // Step 3: Routing
+    setCV(2);
+    const actions=cat==='hot'?
+      [{icon:'📧',text:`Email alert sent to sarinasmedia@gmail.com`,color:'var(--hot)'},{icon:'📊',text:`Added to Hot Leads sheet`,color:'var(--hot)'}]:
+      [{icon:'📊',text:`Added to ${cat.charAt(0).toUpperCase()+cat.slice(1)} Leads sheet`,color:categoryColor(cat)}];
+
+    scene.innerHTML=`
+      <div class="animate-in">
+        <div style="text-align:center;margin-bottom:16px">
+          <div class="agent">
+            <div class="thought visible">${categoryEmoji(cat)} Routing to ${cat} path</div>
+            <div class="agent-body working" style="border:2px solid ${categoryColor(cat)}">🔀</div>
+            <div class="agent-name" style="color:${categoryColor(cat)}">Router</div>
+            <div class="agent-status">Executing ${cat} lead actions</div>
+          </div>
+        </div>
+        <div id="actions"></div>
+        <div style="text-align:center;margin-top:16px">
+          <div class="route-path visible" style="border-color:${categoryColor(cat)};background:${categoryBg(cat)};max-width:300px;margin:0 auto">
+            <div class="route-dot" style="background:${categoryColor(cat)}"></div>
+            <div style="flex:1;font-weight:600">${lead.name}</div>
+            <div><span class="lead-tag" style="background:${categoryBg(cat)};color:${categoryColor(cat)}">${categoryEmoji(cat)} ${cat.toUpperCase()}</span></div>
+          </div>
+        </div>
+      </div>`;
+
+    const actBox=document.getElementById('actions');
+    for(const a of actions){
+      await wait(600);
+      const el=document.createElement('div');el.className='notification';
+      el.innerHTML=`<div class="icon">${a.icon}</div><div style="flex:1">${a.text}</div><div class="m" style="font-size:9px;color:${a.color}">DONE</div>`;
+      actBox.appendChild(el);await wait(80);el.classList.add('visible');
+      log(a.text,a.color);
+    }
+
+    await wait(i<leads.length-1?1200:800);
+  }
+
+  // Final summary
+  showFinal();
+}
+
+function showFinal(){
+  setCV(5);
+  scene.innerHTML=`
+    <div class="final animate-in">
+      <div style="font-size:56px;margin-bottom:12px">✅</div>
+      <h2>All 10 Leads Processed</h2>
+      <p>Every lead was automatically classified by AI and routed to the correct destination. Hot leads got instant email alerts. Zero manual work.</p>
+      <div class="metrics" style="max-width:500px;margin:20px auto">
+        <div class="metric"><div class="num" style="color:var(--hot)">${hotCount}</div><div class="label m">🔥 Hot Leads</div></div>
+        <div class="metric"><div class="num" style="color:var(--warm)">${warmCount}</div><div class="label m">🟡 Warm Leads</div></div>
+        <div class="metric"><div class="num" style="color:var(--cold)">${coldCount}</div><div class="label m">🧊 Cold Leads</div></div>
+        <div class="metric"><div class="num" style="color:var(--green)">0</div><div class="label m">👤 Human Steps</div></div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0">
+        <div class="notification visible" style="max-width:200px;border-color:var(--hot)">
+          <div class="icon">📧</div>
+          <div style="font-size:11px"><strong>${hotCount}</strong> email alerts sent</div>
+        </div>
+        <div class="notification visible" style="max-width:200px;border-color:var(--green)">
+          <div class="icon">📊</div>
+          <div style="font-size:11px"><strong>10</strong> rows in Google Sheets</div>
+        </div>
+      </div>
+      <p style="font-size:12px">Built with <strong style="color:var(--accent)">Make.com</strong> + AI Toolkit + Google Forms + Gmail + Sheets<br>by <strong style="color:var(--accent)">RA Sarinas | RAS AI Solutions</strong></p>
+      <div class="btn-row" style="margin-top:20px">
+        <button class="btn btn-primary" onclick="location.reload()">Run Again ↻</button>
+      </div>
+    </div>`;
+  log(`Complete: ${hotCount} hot, ${warmCount} warm, ${coldCount} cold. Zero manual work.`,'var(--green)');
+}
+
+showIntro();
+</script>
+</body>
+</html>
