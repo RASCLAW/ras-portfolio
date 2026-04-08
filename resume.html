@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ronald Adrian Sarinas - Resume</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;color:#1a1a2e;line-height:1.4;padding:30px 50px;max-width:800px;margin:0 auto;font-size:10.5px}
+h1{font-size:22px;font-weight:700;margin-bottom:2px}
+.subtitle{font-size:12px;color:#e63946;font-weight:600;margin-bottom:6px}
+.contact{font-size:10px;color:#555;margin-bottom:14px}
+.contact a{color:#555;text-decoration:none}
+.section{margin-bottom:12px}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#1a1a2e;border-bottom:2px solid #1a1a2e;padding-bottom:3px;margin-bottom:8px}
+.entry{margin-bottom:8px}
+.entry-header{display:flex;justify-content:space-between;align-items:baseline}
+.entry-title{font-size:11px;font-weight:700}
+.entry-date{font-size:10px;color:#777;font-weight:500}
+.entry-sub{font-size:10px;color:#555;font-style:italic;margin-bottom:3px}
+ul{padding-left:16px;margin-top:3px}
+li{margin-bottom:2px;font-size:10.5px}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.skill-cat{font-size:10.5px}
+.skill-cat strong{font-weight:600}
+.project-title{font-weight:600;font-size:11px}
+.project-sub{font-size:10px;color:#555;margin-bottom:2px}
+</style>
+</head>
+<body>
+
+<h1>Ronald Adrian Sarinas</h1>
+<div class="subtitle">AI & Automation Specialist</div>
+<div class="contact">
+Manila, Philippines &nbsp;|&nbsp; sarinasmedia@gmail.com &nbsp;|&nbsp; <a href="https://rasclaw.github.io/ras-portfolio/">rasclaw.github.io/ras-portfolio</a>
+</div>
+
+<div class="section">
+<div class="section-title">Professional Summary</div>
+<p>AI automation builder with hands-on experience setting up and maintaining workflows in Make.com, n8n, and Zapier. Configures and troubleshoots AI tools (Claude, Gemini, ChatGPT) daily for production systems. Builds API integrations, prompt engineering pipelines, and end-to-end automation workflows. Documents everything using Notion, Google Sheets, GitHub, and structured decision logs.</p>
+</div>
+
+<div class="section">
+<div class="section-title">Technical Skills</div>
+<div class="skills-grid">
+<div class="skill-cat"><strong>Automation:</strong> Make.com, n8n, Zapier</div>
+<div class="skill-cat"><strong>AI Tools:</strong> Claude, Gemini, ChatGPT, Claude Code</div>
+<div class="skill-cat"><strong>Cloud:</strong> Google Cloud Platform, Vertex AI, gcloud CLI, Vercel</div>
+<div class="skill-cat"><strong>APIs:</strong> Meta Graph, Google (Sheets, Drive, Gmail, Calendar), REST, Webhooks</div>
+<div class="skill-cat"><strong>Languages:</strong> Python (30+ scripts), JavaScript, HTML/CSS</div>
+<div class="skill-cat"><strong>AI Capabilities:</strong> Prompt engineering, image gen (Gemini 3.1), video gen (Veo 3.1)</div>
+<div class="skill-cat"><strong>Dev Tools:</strong> GitHub, GitHub Actions, FastAPI, Flask, Playwright, Microsoft Copilot</div>
+<div class="skill-cat"><strong>Documentation:</strong> Notion, Google Sheets, JSON, Markdown, GitHub</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">Work Experience</div>
+
+<div class="entry">
+<div class="entry-header"><span class="entry-title">Criminal Data Processor</span><span class="entry-date">2024 - Present</span></div>
+<div class="entry-sub">Informdata &nbsp;|&nbsp; McKinney Hills, Taguig (Night Shift)</div>
+<ul>
+<li>Quality checker in human-in-the-loop pipeline after automation collects court data across US jurisdictions</li>
+<li>Built an AI-powered knowledge base chatbot (Flask + Claude) indexing 50+ reference documents, replacing manual policy lookup</li>
+<li>Created Microsoft Copilot agents that improved team processing workflows and shared them with colleagues</li>
+</ul>
+</div>
+
+<div class="entry">
+<div class="entry-header"><span class="entry-title">Leads Qualification Specialist</span><span class="entry-date">2022 - 2024</span></div>
+<div class="entry-sub">TDCX / Google BPO</div>
+<ul>
+<li>Reviewed 200+ websites daily for lead validity, business verification, and Google Ads TOS compliance</li>
+<li>Managed high-volume, detail-oriented work with strict quality standards and clear reporting</li>
+<li>Deep top-of-funnel experience now applied to AI-powered sales funnel automation</li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">Projects</div>
+
+<div class="entry">
+<div class="project-title">DuberyMNL -- Full Facebook Automation Pipeline</div>
+<div class="project-sub">Live business &nbsp;|&nbsp; duberymnl.com</div>
+<ul>
+<li>Built end-to-end pipeline: AI caption generation, image creation via Vertex AI, HITL review, Meta Ads staging, organic posting, comment-triggered engagement, Messenger chatbot, and CRM tracking</li>
+<li>Generated 36 approved ad creatives from phone photos using prompt engineering -- no studio, no designer</li>
+<li>Integrated Google Sheets as pipeline source of truth with 30+ Python automation scripts</li>
+<li>Dynamic landing pages personalized per ad creative, deployed on Vercel</li>
+</ul>
+</div>
+
+<div class="entry">
+<div class="project-title">Make.com Automation Workflows</div>
+<ul>
+<li><strong>Smart Lead Router:</strong> Google Form intake with AI classification, conditional routing to Google Sheets by lead type</li>
+<li><strong>Client Engagement Pipeline:</strong> AI-powered email response system that classifies client intent and drafts personalized follow-ups</li>
+</ul>
+</div>
+
+<div class="entry">
+<div class="project-title">Additional Projects</div>
+<ul>
+<li><strong>Knowledge Base Chatbot:</strong> Flask + Claude AI with keyword-indexed retrieval across 50+ documents for case processors</li>
+<li><strong>Cinematic Scroll Website:</strong> Scroll-driven animated product showcase using GSAP and canvas frame rendering</li>
+<li><strong>Life Dashboard:</strong> Personal dashboard with autonomous moderator agent, financial tracking, and Telegram alerts</li>
+<li><strong>Scheduled Monitoring:</strong> Real-time project alerts via Telegram bots, scheduled through GitHub Actions</li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">Setup</div>
+<p>Windows 11 Pro laptop with backup device &nbsp;|&nbsp; Stable internet with backup connection &nbsp;|&nbsp; Available power backup</p>
+</div>
+
+</body>
+</html>
