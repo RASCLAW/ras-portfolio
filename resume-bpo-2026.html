@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronald Adrian Sarinas - Resume</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #1a1a2e;
+  background: #fff;
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* LEFT SIDEBAR */
+.sidebar {
+  background: #1a1a2e;
+  color: #e8e8f0;
+  padding: 32px 20px;
+}
+
+.name-block { margin-bottom: 24px; }
+
+.name-block h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.name-block .title {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: #e63946;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  margin: 16px 0;
+}
+
+.sidebar-section { margin-bottom: 20px; }
+
+.sidebar-section h2 {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #e63946;
+  margin-bottom: 10px;
+}
+
+.contact-item {
+  font-size: 9.5px;
+  color: #b8b8cc;
+  margin-bottom: 5px;
+  word-break: break-all;
+}
+
+.contact-item a { color: #b8b8cc; text-decoration: none; }
+
+.skill-group { margin-bottom: 10px; }
+
+.skill-group strong {
+  display: block;
+  font-size: 9px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.skill-group span {
+  font-size: 9.5px;
+  color: #b8b8cc;
+  line-height: 1.6;
+}
+
+.edu-entry { margin-bottom: 10px; }
+.edu-entry .school { font-size: 9.5px; font-weight: 600; color: #fff; }
+.edu-entry .degree { font-size: 9px; color: #b8b8cc; }
+.edu-entry .years { font-size: 9px; color: #7070a0; }
+
+/* RIGHT MAIN */
+.main {
+  padding: 32px 28px;
+  background: #fff;
+}
+
+.summary {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8e8f0;
+}
+
+.summary p {
+  font-size: 10.5px;
+  color: #444;
+  line-height: 1.7;
+}
+
+.section { margin-bottom: 20px; }
+
+.section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #1a1a2e;
+  border-bottom: 2px solid #e63946;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.entry { margin-bottom: 12px; }
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1px;
+}
+
+.entry-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.entry-date {
+  font-size: 9.5px;
+  color: #888;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.entry-sub {
+  font-size: 9.5px;
+  color: #e63946;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+ul {
+  padding-left: 14px;
+  margin-top: 3px;
+}
+
+li {
+  font-size: 10px;
+  color: #444;
+  margin-bottom: 2px;
+  line-height: 1.5;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.project-card {
+  background: #f8f8fc;
+  border-left: 3px solid #e63946;
+  padding: 8px 10px;
+  border-radius: 0 4px 4px 0;
+}
+
+.project-card .proj-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 2px;
+}
+
+.project-card .proj-sub {
+  font-size: 9px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.project-card p {
+  font-size: 9.5px;
+  color: #555;
+  line-height: 1.5;
+}
+
+@media print {
+  body { font-size: 10px; }
+  .page { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="name-block">
+      <h1>Ronald Adrian Sarinas</h1>
+      <div class="title">Data Operations & Customer Experience Specialist</div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="sidebar-section">
+      <h2>Contact</h2>
+      <div class="contact-item">San Joaquin, Pasig City</div>
+      <div class="contact-item">+63 977 685 2325</div>
+      <div class="contact-item"><a href="mailto:ronaldadriansarinas@gmail.com">ronaldadriansarinas@gmail.com</a></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="sidebar-section">
+      <h2>Core Competencies</h2>
+      <div class="skill-group">
+        <strong>Operations</strong>
+        <span>Data Verification & QA, Compliance Research, Escalation Handling, Risk Assessment, Lead Qualification</span>
+      </div>
+      <div class="skill-group">
+        <strong>Customer Experience</strong>
+        <span>Technical Support, Dispute Resolution, Billing & Account Management, Multi-channel Support (Phone, Chat, Email)</span>
+      </div>
+      <div class="skill-group">
+        <strong>Tools & Platforms</strong>
+        <span>Google Workspace, Microsoft Office, CRM Systems, Criminal Justice Platforms, Remote Work Tools</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="sidebar-section">
+      <h2>Strengths</h2>
+      <div class="skill-group">
+        <span>
+          Detail-oriented & accurate<br>
+          High-volume task management<br>
+          PII & confidentiality handling<br>
+          Remote-first work ethic<br>
+          Fast learner & self-directed<br>
+          Cross-functional collaboration<br>
+          Process improvement mindset
+        </span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="sidebar-section">
+      <h2>Education</h2>
+      <div class="edu-entry">
+        <div class="school">AMA Computer College</div>
+        <div class="degree">BS Information Technology</div>
+        <div class="years">Binan, Laguna &nbsp;|&nbsp; 2003–2007</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <div class="summary">
+      <p>
+        Detail-oriented remote operations professional with 6+ years of BPO experience across data processing, compliance research, customer escalations, and lead verification — serving global brands including Google, Airbnb, Disney+, and InformData.
+        Consistent track record of high accuracy, strict confidentiality, and quality output in fast-paced remote environments.
+        Additionally builds AI-assisted tools and automation workflows as a personal initiative, bringing a tech-forward mindset to operational work.
+      </p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Work Experience</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Criminal Data Processor</span>
+          <span class="entry-date">Sept 2023 – Present</span>
+        </div>
+        <div class="entry-sub">InformData &nbsp;/&nbsp; Valor Global Inc.</div>
+        <ul>
+          <li>Perform in-depth criminal background checks using national and state justice systems, ensuring compliance and accuracy across US jurisdictions</li>
+          <li>Analyze and verify sensitive data including arrest records and court documents, maintaining 100% data integrity</li>
+          <li>Handle personally identifiable information (PII) under strict confidentiality protocols and regulatory standards</li>
+          <li>Compile detailed reports supporting client risk assessment and decision-making processes</li>
+          <li>Collaborated with cross-functional teams to resolve data discrepancies and improve processing workflows</li>
+          <li>Developed an internal AI knowledge base tool (personal initiative) that reduced team policy lookup time</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Technical Support Specialist</span>
+          <span class="entry-date">May 2023 – Sept 2023</span>
+        </div>
+        <div class="entry-sub">Disney+ &amp; Hulu &nbsp;/&nbsp; Valor Global Inc.</div>
+        <ul>
+          <li>Delivered technical troubleshooting for streaming issues, login errors, and device compatibility across multiple platforms</li>
+          <li>Resolved billing and payment disputes, processed refunds, and managed account-related concerns</li>
+          <li>Responded to inquiries via phone and chat while maintaining high service quality and customer empathy</li>
+          <li>Documented recurring issues and recommended workflow improvements to the support team</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Escalation Support Specialist</span>
+          <span class="entry-date">Jan 2022 – May 2023</span>
+        </div>
+        <div class="entry-sub">Airbnb &nbsp;/&nbsp; Teledirect Philippines Inc.</div>
+        <ul>
+          <li>Handled complex escalated cases requiring independent investigation and resolution between hosts and guests</li>
+          <li>Acted as mediator to resolve high-stakes disputes, ensuring fair outcomes and full policy compliance</li>
+          <li>Exercised decision-making authority on sensitive matters including review removals and reservation adjustments</li>
+          <li>Delivered support via phone, email, and chat while maintaining professionalism under pressure</li>
+          <li>Provided structured feedback to product and policy teams that contributed to process improvements</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Lead Qualification Specialist</span>
+          <span class="entry-date">May 2019 – Jan 2022</span>
+        </div>
+        <div class="entry-sub">Google &nbsp;/&nbsp; Teledirect Philippines Inc.</div>
+        <ul>
+          <li>Reviewed 200+ websites daily to assess eligibility for Google Ads and verify compliance with platform policies</li>
+          <li>Conducted detailed research and documentation to support accurate lead verification and prevent policy violations</li>
+          <li>Sourced and validated client contact information for verified leads, supporting sales team outreach</li>
+          <li>Operated multiple tools simultaneously in a high-volume, metrics-driven remote environment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Personal Interest</div>
+      <p style="font-size:10px;color:#555;line-height:1.6;">Currently running a small personal Facebook business on the side, where I use AI and automation tools to manage content, customer messages, and basic workflows.</p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
