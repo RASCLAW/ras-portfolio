@@ -1,2 +1,14 @@
 .vercel
 node_modules/
+
+# Large intermediate PDFs (keep only Resume + final deliverable in git if needed)
+portfolio.pdf
+portfolio_compressed.pdf
+portfolio_final.pdf
+portfolio_upwork.pdf
+
+# Local-only
+.tmp/
+.claude/
+.env
+.env.local
